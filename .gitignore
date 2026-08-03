@@ -1,0 +1,8 @@
+/target
+/Cargo.lock
+.snowball-src/
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/

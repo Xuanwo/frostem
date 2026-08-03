@@ -1,0 +1,164 @@
+name: daily-upstream
+
+on:
+  schedule:
+    # Once per day (UTC). Policy: detect HEAD once daily; always publish when it moved.
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Publish even if upstream pin already matches HEAD (initial release)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  sync-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install cargo-semver-checks
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: cargo-semver-checks
+
+      - name: Read current upstream pin
+        id: pin
+        run: |
+          if [[ -f upstream-pin.toml ]]; then
+            echo "commit=$(sed -n 's/^commit = \"\([^\"]*\)\"/\1/p' upstream-pin.toml)" >> "$GITHUB_OUTPUT"
+          else
+            echo "commit=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Resolve snowball main HEAD
+        id: upstream
+        run: |
+          sha=$(git ls-remote https://github.com/snowballstem/snowball.git refs/heads/main | awk '{print $1}')
+          if [[ -z "$sha" ]]; then
+            echo "failed to resolve upstream main" >&2
+            exit 1
+          fi
+          echo "commit=$sha" >> "$GITHUB_OUTPUT"
+          echo "Upstream main HEAD: $sha"
+
+      - name: Detect upstream change
+        id: changed
+        run: |
+          new="${{ steps.upstream.outputs.commit }}"
+          old="${{ steps.pin.outputs.commit }}"
+          force="${{ github.event_name == 'workflow_dispatch' && inputs.force || false }}"
+          if [[ "$force" == "true" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Force publish requested for $new"
+          elif [[ -n "$old" && "$old" == "$new" ]]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Upstream HEAD unchanged ($new); nothing to publish."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Upstream moved: ${old:-<none>} -> $new"
+          fi
+
+      - name: Sync from snowball main
+        if: steps.changed.outputs.changed == 'true'
+        run: python3 scripts/sync_from_snowball.py
+
+      - name: Decide version (semver-checks + same-day patch)
+        if: steps.changed.outputs.changed == 'true'
+        id: version
+        run: |
+          set -euo pipefail
+          major=$(sed -n 's/^version = \"\([0-9]*\)\..*/\1/p' Cargo.toml)
+          minor=$(sed -n 's/^version = \"[0-9]*\.\([0-9]*\)\..*/\1/p' Cargo.toml)
+          patch=0
+
+          set +e
+          cargo semver-checks check-release >semver.out 2>semver.err
+          rc=$?
+          set -e
+          cat semver.out || true
+          cat semver.err || true
+
+          if [[ $rc -ne 0 ]]; then
+            if grep -qiE \
+              'not been published|could not|no crate|404|failed to|unable to|does not exist|never published|not found' \
+              semver.err semver.out; then
+              echo "semver-checks: no usable baseline; keeping major=$major"
+            else
+              echo "semver-checks reported API break; bumping major"
+              major=$((major + 1))
+            fi
+          else
+            echo "semver-checks: no breaking changes"
+          fi
+
+          version="${major}.${minor}.${patch}"
+
+          # Strategy A: same-day re-release / tag collision → bump patch
+          while git rev-parse "v${version}" >/dev/null 2>&1; do
+            patch=$((patch + 1))
+            version="${major}.${minor}.${patch}"
+          done
+
+          if command -v curl >/dev/null; then
+            while curl -fsSL -A "frostem-ci" \
+              "https://crates.io/api/v1/crates/frostem/${version}" >/dev/null 2>&1; do
+              patch=$((patch + 1))
+              version="${major}.${minor}.${patch}"
+            done
+          fi
+
+          python3 scripts/sync_from_snowball.py --skip-build --snowball-dir .snowball-src \
+            --major "$major" --patch "$patch"
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "Resolved version: $version"
+
+      - name: Test
+        if: steps.changed.outputs.changed == 'true'
+        run: cargo test
+
+      - name: Commit, tag, and push
+        if: steps.changed.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No file changes after sync (unexpected if commit moved)."
+            exit 1
+          fi
+          git commit -m "chore: sync snowball ${{ steps.upstream.outputs.commit }}"
+          git tag "v${{ steps.version.outputs.version }}"
+          git push
+          git push origin "v${{ steps.version.outputs.version }}"
+
+      - name: Publish to crates.io
+        if: steps.changed.outputs.changed == 'true'
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: |
+          if [[ -z "${CARGO_REGISTRY_TOKEN:-}" ]]; then
+            echo "CARGO_REGISTRY_TOKEN not set; skipping crates.io publish."
+            exit 0
+          fi
+          cargo publish

@@ -1,0 +1,112 @@
+[package]
+name = "frostem"
+version = "1.20260729.0"
+edition = "2021"
+rust-version = "1.70"
+authors = ["Xuanwo <github@xuanwo.io>"]
+description = "Pre-built Snowball stemmers for Rust (tracks snowball main)"
+readme = "README.md"
+license = "BSD-3-Clause"
+repository = "https://github.com/Xuanwo/frostem"
+documentation = "https://docs.rs/frostem"
+homepage = "https://github.com/Xuanwo/frostem"
+keywords = ["snowball", "stemming", "nlp", "information-retrieval"]
+categories = ["text-processing", "internationalization"]
+include = [
+    "src/**/*",
+    "Cargo.toml",
+    "README.md",
+    "LICENSE*",
+    "upstream-pin.toml",
+]
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
+[features]
+# AUTO-FEATURES-BEGIN
+default = ["all"]
+all = [
+    "arabic",
+    "armenian",
+    "basque",
+    "catalan",
+    "czech",
+    "danish",
+    "dutch",
+    "dutch_porter",
+    "earlymodernenglish",
+    "english",
+    "esperanto",
+    "estonian",
+    "finnish",
+    "french",
+    "german",
+    "greek",
+    "hindi",
+    "hungarian",
+    "indonesian",
+    "irish",
+    "italian",
+    "lithuanian",
+    "lovins",
+    "nepali",
+    "norwegian",
+    "persian",
+    "polish",
+    "porter",
+    "portuguese",
+    "romanian",
+    "russian",
+    "serbian",
+    "sesotho",
+    "spanish",
+    "swedish",
+    "tamil",
+    "turkish",
+    "yiddish",
+]
+arabic = []
+armenian = []
+basque = []
+catalan = []
+czech = []
+danish = []
+dutch = []
+dutch_porter = []
+earlymodernenglish = []
+english = []
+esperanto = []
+estonian = []
+finnish = []
+french = []
+german = []
+greek = []
+hindi = []
+hungarian = []
+indonesian = []
+irish = []
+italian = []
+lithuanian = []
+lovins = []
+nepali = []
+norwegian = []
+persian = []
+polish = []
+porter = []
+portuguese = []
+romanian = []
+russian = []
+serbian = []
+sesotho = []
+spanish = []
+swedish = []
+tamil = []
+turkish = []
+yiddish = []
+# AUTO-FEATURES-END
+
+[dependencies]
+
+[dev-dependencies]

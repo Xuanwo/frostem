@@ -1,0 +1,93 @@
+# frostem
+
+Pre-built [Snowball](https://snowballstem.org/) stemmers for Rust.
+
+frostem tracks upstream [`snowballstem/snowball`](https://github.com/snowballstem/snowball) **`main`** and publishes the generated Rust stemmers behind a small, stable facade. You do not need the Snowball compiler at build time.
+
+## Install
+
+```toml
+[dependencies]
+frostem = "1"
+```
+
+All algorithms are enabled by default. To shrink the dependency, disable defaults and pick languages:
+
+```toml
+[dependencies]
+frostem = { version = "1", default-features = false, features = ["english", "german"] }
+```
+
+## Usage
+
+```rust
+use frostem::{Algorithm, Stemmer};
+
+fn main() {
+    let stemmer = Stemmer::new(Algorithm::English);
+    assert_eq!(stemmer.stem("fruitlessly"), "fruitless");
+
+    // Names and aliases from Snowball modules.txt (case-insensitive)
+    let de = Stemmer::try_from_name("de").unwrap();
+    assert_eq!(de.stem("automaten"), "automat");
+}
+```
+
+Inputs should already be lowercased when that is meaningful for the language.
+
+### Provenance
+
+Each release records the upstream commit it was generated from:
+
+```rust
+use frostem::{SNOWBALL_COMMIT, SNOWBALL_COMMIT_TIME, SNOWBALL_DESCRIBE};
+
+println!("{SNOWBALL_COMMIT} @ {SNOWBALL_COMMIT_TIME} ({SNOWBALL_DESCRIBE})");
+```
+
+## Versioning
+
+| Component | Meaning |
+|-----------|---------|
+| **major** | frostem public Rust API |
+| **minor** | UTC date (`YYYYMMDD`) of the upstream commit used for generation |
+| **patch** | frostem-only changes, or a same-day re-release |
+
+Example: `1.20260729.0` — facade API v1, generated from an upstream commit on 2026-07-29 UTC.
+
+- API breaks are detected with [`cargo-semver-checks`](https://github.com/obi1kenobi/cargo-semver-checks) and bump **major**.
+- Upstream `main` movement bumps **minor** to that commit’s UTC date (daily automation; always publishes when HEAD advanced).
+- Same calendar day re-releases use **patch** (strategy A).
+
+`Algorithm` is `#[non_exhaustive]`: new upstream languages are a minor change, not a major break.
+
+## Algorithms
+
+Every Snowball algorithm under `algorithms/*.sbl` is included (including curiosities such as `lovins`). Feature names match the algorithm ids (e.g. `english`, `dutch_porter`, `earlymodernenglish`).
+
+See [`SNOWBALL_ALGORITHMS`](https://docs.rs/frostem/latest/frostem/constant.SNOWBALL_ALGORITHMS.html) or `Algorithm::all()` for the set enabled in a given build.
+
+## Maintenance
+
+Regenerate from upstream (requires a C toolchain and `make`):
+
+```bash
+python3 scripts/sync_from_snowball.py
+cargo test
+```
+
+Options:
+
+```text
+--snowball-dir DIR   use an existing checkout instead of .snowball-src
+--major N            set major (default: keep current)
+--patch N            set patch (default: 0)
+```
+
+CI runs a daily sync against `main`, and publishes to crates.io when the upstream commit changes.
+
+## License
+
+BSD-3-Clause. Stemming algorithms and the Snowball runtime are from the
+[Snowball project](https://github.com/snowballstem/snowball); see `LICENSE` and
+`LICENSE-SNOWBALL`.
