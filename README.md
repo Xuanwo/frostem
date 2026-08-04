@@ -35,15 +35,9 @@ fn main() {
 
 Inputs should already be lowercased when that is meaningful for the language.
 
-### Provenance
-
-Each release records the upstream commit it was generated from:
-
-```rust
-use frostem::{SNOWBALL_COMMIT, SNOWBALL_COMMIT_TIME, SNOWBALL_DESCRIBE};
-
-println!("{SNOWBALL_COMMIT} @ {SNOWBALL_COMMIT_TIME} ({SNOWBALL_DESCRIBE})");
-```
+Upstream provenance (git commit / time) is recorded in `upstream-pin.toml` in
+this repository, not exposed as Rust API. Consumers should rely on the crate
+**version** (`major.YYYYMMDD.patch`).
 
 ## Versioning
 
@@ -65,7 +59,7 @@ Example: `1.20260729.0` — facade API v1, generated from an upstream commit on 
 
 Every Snowball algorithm under `algorithms/*.sbl` is included (including curiosities such as `lovins`). Feature names match the algorithm ids (e.g. `english`, `dutch_porter`, `earlymodernenglish`).
 
-See [`SNOWBALL_ALGORITHMS`](https://docs.rs/frostem/latest/frostem/constant.SNOWBALL_ALGORITHMS.html) or `Algorithm::all()` for the set enabled in a given build.
+Use `Algorithm::all()` for the set enabled in a given build.
 
 ## Maintenance
 

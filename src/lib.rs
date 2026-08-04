@@ -10,7 +10,8 @@
 //!   was generated from
 //! - **patch** — frostem-only fixes, or a same-day re-release
 //!
-//! Upstream provenance is exposed as [`SNOWBALL_COMMIT`] and related constants.
+//! Upstream commit pins live in the repository (`upstream-pin.toml`), not in
+//! the public Rust API.
 //!
 //! # Features
 //!
@@ -54,15 +55,12 @@ pub(crate) mod algorithms;
 mod algorithm;
 mod dispatch;
 mod error;
-mod metadata;
 mod stemmer;
 
 #[doc(inline)]
 pub use algorithm::Algorithm;
 #[doc(inline)]
 pub use error::UnknownAlgorithm;
-#[doc(inline)]
-pub use metadata::{SNOWBALL_ALGORITHMS, SNOWBALL_COMMIT, SNOWBALL_COMMIT_TIME, SNOWBALL_DESCRIBE};
 #[doc(inline)]
 pub use stemmer::Stemmer;
 
@@ -94,17 +92,6 @@ mod tests {
     fn unknown_algorithm() {
         let err = Algorithm::from_name("not-a-lang").unwrap_err();
         assert_eq!(err.name, "not-a-lang");
-    }
-
-    #[test]
-    fn metadata_is_populated() {
-        assert_eq!(SNOWBALL_COMMIT.len(), 40);
-        assert!(!SNOWBALL_COMMIT_TIME.is_empty());
-        assert!(!SNOWBALL_DESCRIBE.is_empty());
-        assert!(!SNOWBALL_ALGORITHMS.is_empty());
-        assert!(SNOWBALL_ALGORITHMS.contains(&"english") || !cfg!(feature = "english"));
-        // algorithms list always includes every generated id, independent of features
-        assert!(SNOWBALL_ALGORITHMS.iter().any(|a| *a == "english"));
     }
 
     #[test]
