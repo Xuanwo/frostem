@@ -10,7 +10,7 @@ license = "BSD-3-Clause"
 repository = "https://github.com/Xuanwo/frostem"
 documentation = "https://docs.rs/frostem"
 homepage = "https://github.com/Xuanwo/frostem"
-keywords = ["snowball", "stemming", "nlp", "information-retrieval"]
+keywords = ["snowball", "stemming", "nlp", "search"]
 categories = ["text-processing", "internationalization"]
 include = [
     "src/**/*",
