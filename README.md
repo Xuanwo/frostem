@@ -78,7 +78,32 @@ Options:
 --patch N            set patch (default: 0)
 ```
 
-CI runs a daily sync against `main`, and publishes to crates.io when the upstream commit changes.
+CI runs a daily sync against `main`, and publishes to crates.io when the upstream commit changes, using [Trusted Publishing](https://crates.io/docs/trusted-publishing) (OIDC; no long-lived API token secret).
+
+### Trusted Publishing
+
+Bootstrap (one-time, on a maintainer machine):
+
+1. Publish the first version manually (Trusted Publishing only applies after the crate exists):
+
+   ```bash
+   cargo publish
+   ```
+
+2. On crates.io → crate **frostem** → **Settings** → **Trusted Publishing** → **Add** → **GitHub**:
+
+   | Field | Value |
+   |-------|--------|
+   | Repository owner | `Xuanwo` |
+   | Repository name | `frostem` |
+   | Workflow filename | `daily.yml` |
+   | Environment | *(leave empty — this repo does not use a GitHub Environment)* |
+
+3. Optionally enable “Require trusted publishing for all new versions” after the first CI publish succeeds.
+
+The daily workflow requests a short-lived token with `rust-lang/crates-io-auth-action` (`permissions.id-token: write`). Do **not** set a `CARGO_REGISTRY_TOKEN` repository secret for routine releases.
+
+If you rename the workflow file or add a GitHub Environment, update the Trusted Publisher entry on crates.io to match exactly.
 
 ## License
 

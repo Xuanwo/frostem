@@ -11,8 +11,10 @@ on:
         type: boolean
         default: false
 
+# contents: push sync commits/tags; id-token: crates.io Trusted Publishing (OIDC).
 permissions:
   contents: write
+  id-token: write
 
 env:
   CARGO_TERM_COLOR: always
@@ -152,13 +154,16 @@ jobs:
           git push
           git push origin "v${{ steps.version.outputs.version }}"
 
+      # Trusted Publishing: short-lived token via OIDC (no CARGO_REGISTRY_TOKEN secret).
+      # Requires a Trusted Publisher on crates.io for this repo + workflow file daily.yml.
+      # See README "Trusted Publishing".
+      - name: Authenticate with crates.io
+        if: steps.changed.outputs.changed == 'true'
+        id: crates-io-auth
+        uses: rust-lang/crates-io-auth-action@v1
+
       - name: Publish to crates.io
         if: steps.changed.outputs.changed == 'true'
         env:
-          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
-        run: |
-          if [[ -z "${CARGO_REGISTRY_TOKEN:-}" ]]; then
-            echo "CARGO_REGISTRY_TOKEN not set; skipping crates.io publish."
-            exit 0
-          fi
-          cargo publish
+          CARGO_REGISTRY_TOKEN: ${{ steps.crates-io-auth.outputs.token }}
+        run: cargo publish
