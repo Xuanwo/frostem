@@ -82,28 +82,25 @@ CI runs a daily sync against `main`, and publishes to crates.io when the upstrea
 
 ### Trusted Publishing
 
-Bootstrap (one-time, on a maintainer machine):
+Publishing from CI uses [Trusted Publishing](https://crates.io/docs/trusted-publishing) (OIDC via `rust-lang/crates-io-auth-action`). No `CARGO_REGISTRY_TOKEN` secret is required for routine releases.
 
-1. Publish the first version manually (Trusted Publishing only applies after the crate exists):
+Configured for this repo as:
 
-   ```bash
-   cargo publish
-   ```
+```bash
+cargo install cargo-trustpub
+cargo trustpub add --publisher github --owner Xuanwo --repo frostem --pipeline daily.yml
+cargo trustpub status
+```
 
-2. On crates.io → crate **frostem** → **Settings** → **Trusted Publishing** → **Add** → **GitHub**:
+(`daily.yml` must match `.github/workflows/daily.yml`. No GitHub Environment is used.)
 
-   | Field | Value |
-   |-------|--------|
-   | Repository owner | `Xuanwo` |
-   | Repository name | `frostem` |
-   | Workflow filename | `daily.yml` |
-   | Environment | *(leave empty — this repo does not use a GitHub Environment)* |
+After a successful CI publish, you may optionally require Trusted Publishing for all future versions:
 
-3. Optionally enable “Require trusted publishing for all new versions” after the first CI publish succeeds.
+```bash
+cargo trustpub set --trustpub-only true
+```
 
-The daily workflow requests a short-lived token with `rust-lang/crates-io-auth-action` (`permissions.id-token: write`). Do **not** set a `CARGO_REGISTRY_TOKEN` repository secret for routine releases.
-
-If you rename the workflow file or add a GitHub Environment, update the Trusted Publisher entry on crates.io to match exactly.
+If you rename the workflow file or add a GitHub Environment, update the config with `cargo trustpub` (or the crates.io UI) so it matches exactly.
 
 ## License
 
