@@ -47,15 +47,8 @@ mod snowball_env;
 pub(crate) use among::Among;
 pub(crate) use snowball_env::SnowballEnv;
 
-#[allow(
-    dead_code,
-    non_snake_case,
-    non_upper_case_globals,
-    unused_assignments,
-    unused_mut,
-    unused_parens,
-    unused_variables
-)]
+// Generated stemmers may assign state flags that the template later overwrites.
+#[allow(unused_assignments)]
 pub(crate) mod algorithms;
 
 mod algorithm;
@@ -64,9 +57,13 @@ mod error;
 mod metadata;
 mod stemmer;
 
+#[doc(inline)]
 pub use algorithm::Algorithm;
+#[doc(inline)]
 pub use error::UnknownAlgorithm;
+#[doc(inline)]
 pub use metadata::{SNOWBALL_ALGORITHMS, SNOWBALL_COMMIT, SNOWBALL_COMMIT_TIME, SNOWBALL_DESCRIBE};
+#[doc(inline)]
 pub use stemmer::Stemmer;
 
 #[cfg(test)]

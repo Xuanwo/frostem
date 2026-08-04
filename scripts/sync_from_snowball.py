@@ -174,22 +174,55 @@ def write_algorithm_enum(
         "",
         "/// Snowball stemming algorithm.",
         "///",
-        "/// Variants are gated by Cargo features of the same snake_case name.",
-        "/// The enum is `#[non_exhaustive]` so new upstream algorithms are not a",
-        "/// major-version break for downstream `match` expressions that keep a",
-        "/// wildcard arm.",
+        "/// Each variant corresponds to one upstream algorithm id (see",
+        "/// [`Self::name`]) and is gated by a Cargo feature of the same",
+        "/// snake_case name. With default features (`all`), every variant is",
+        "/// available.",
+        "///",
+        "/// The enum is `#[non_exhaustive]` so newly added upstream algorithms",
+        "/// are not a major-version break for downstream `match` expressions",
+        "/// that keep a wildcard arm.",
+        "///",
+        "/// Algorithm behavior and documentation live on the",
+        "/// [Snowball website](https://snowballstem.org/).",
+        "///",
+        "/// # Example",
+        "///",
+        "/// ```",
+        "/// use frostem::{Algorithm, Stemmer};",
+        "///",
+        '/// let stemmer = Stemmer::new(Algorithm::English);',
+        '/// assert_eq!(stemmer.algorithm().name(), "english");',
+        "/// ```",
         "#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]",
         "#[non_exhaustive]",
         "pub enum Algorithm {",
     ]
     for algo in algorithms:
         variant = to_pascal(algo)
+        lines.append(f"    /// `{algo}` Snowball stemmer.")
+        lines.append("    ///")
+        lines.append(
+            f"    /// Enabled by the `{algo}` Cargo feature. "
+            f'Canonical id: `"{algo}"`.'
+        )
         lines.append(f'    #[cfg(feature = "{algo}")]')
         lines.append(f"    {variant},")
     lines.append("}")
     lines.append("")
     lines.append("impl Algorithm {")
-    lines.append("    /// Canonical Snowball algorithm id (feature name).")
+    lines.append("    /// Returns the canonical Snowball algorithm id.")
+    lines.append("    ///")
+    lines.append("    /// This string is also the Cargo feature name that gates")
+    lines.append("    /// the variant (for example `\"english\"`).")
+    lines.append("    ///")
+    lines.append("    /// # Example")
+    lines.append("    ///")
+    lines.append("    /// ```")
+    lines.append("    /// use frostem::Algorithm;")
+    lines.append("    ///")
+    lines.append('    /// assert_eq!(Algorithm::English.name(), "english");')
+    lines.append("    /// ```")
     lines.append("    pub const fn name(self) -> &'static str {")
     lines.append("        match self {")
     for algo in algorithms:
@@ -199,7 +232,18 @@ def write_algorithm_enum(
     lines.append("        }")
     lines.append("    }")
     lines.append("")
-    lines.append("    /// All algorithms enabled in this build, in stable name order.")
+    lines.append("    /// All algorithms enabled in this build.")
+    lines.append("    ///")
+    lines.append("    /// Order is stable and sorted by canonical algorithm id.")
+    lines.append("    /// Variants whose Cargo features are disabled are omitted.")
+    lines.append("    ///")
+    lines.append("    /// # Example")
+    lines.append("    ///")
+    lines.append("    /// ```")
+    lines.append("    /// use frostem::Algorithm;")
+    lines.append("    ///")
+    lines.append("    /// assert!(!Algorithm::all().is_empty());")
+    lines.append("    /// ```")
     lines.append("    pub fn all() -> &'static [Algorithm] {")
     lines.append("        &[")
     for algo in algorithms:
@@ -209,7 +253,28 @@ def write_algorithm_enum(
     lines.append("        ]")
     lines.append("    }")
     lines.append("")
-    lines.append("    /// Look up an algorithm by name or common alias (case-insensitive).")
+    lines.append("    /// Look up an algorithm by name or common alias.")
+    lines.append("    ///")
+    lines.append("    /// Accepts the canonical id from [`Self::name`] and aliases")
+    lines.append("    /// from upstream `libstemmer/modules.txt` (for example")
+    lines.append('    /// `"en"` / `"eng"` for English). Comparison is')
+    lines.append("    /// case-insensitive after trimming whitespace.")
+    lines.append("    ///")
+    lines.append("    /// # Errors")
+    lines.append("    ///")
+    lines.append("    /// Returns [`UnknownAlgorithm`](crate::UnknownAlgorithm) if")
+    lines.append("    /// the name is unknown or the matching algorithm's feature")
+    lines.append("    /// is disabled in this build.")
+    lines.append("    ///")
+    lines.append("    /// # Example")
+    lines.append("    ///")
+    lines.append("    /// ```")
+    lines.append("    /// use frostem::Algorithm;")
+    lines.append("    ///")
+    lines.append(
+        '    /// assert_eq!(Algorithm::from_name("en").unwrap(), Algorithm::English);'
+    )
+    lines.append("    /// ```")
     lines.append(
         "    pub fn from_name(name: &str) -> Result<Self, crate::error::UnknownAlgorithm> {"
     )
@@ -252,16 +317,35 @@ def write_metadata(
     alg_list = ",\n    ".join(f'"{a}"' for a in algorithms)
     text = f'''// @generated by scripts/sync_from_snowball.py — DO NOT EDIT
 
-/// Git commit SHA of the snowball tree this crate was generated from.
+/// Full git commit SHA of the upstream snowball tree used to generate this crate.
+///
+/// This pin is the source of truth for which snowball revision the stemmed
+/// algorithms correspond to. The crate **minor** version is derived from the
+/// committer date of this commit (UTC `YYYYMMDD`).
+///
+/// See also [`SNOWBALL_COMMIT_TIME`] and [`SNOWBALL_DESCRIBE`].
 pub const SNOWBALL_COMMIT: &str = "{commit}";
 
-/// Committer date of [`SNOWBALL_COMMIT`] (`git log -1 --format=%cI`).
+/// Committer timestamp of [`SNOWBALL_COMMIT`] (`git log -1 --format=%cI`).
+///
+/// The value is whatever git recorded (often with an offset); frostem converts
+/// it to UTC when choosing the package **minor** version.
 pub const SNOWBALL_COMMIT_TIME: &str = "{commit_time}";
 
-/// `git describe` of the snowball tree at generation time.
+/// `git describe --tags --always --dirty` of the snowball tree at generation time.
+///
+/// Useful for human-readable provenance when the tree is not exactly on a
+/// release tag (typical while tracking `main`).
 pub const SNOWBALL_DESCRIBE: &str = "{described}";
 
-/// Algorithm ids included in this generated tree (feature names).
+/// Canonical algorithm ids present in this generated tree.
+///
+/// These strings match Cargo feature names and [`crate::Algorithm::name`].
+/// The list is independent of which features are enabled in a given build:
+/// an id may appear here even if its feature was disabled by the consumer.
+///
+/// For algorithms actually compiled into the binary, use
+/// [`crate::Algorithm::all`].
 pub const SNOWBALL_ALGORITHMS: &[&str] = &[
     {alg_list},
 ];

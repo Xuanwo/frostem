@@ -2,93 +2,234 @@
 
 /// Snowball stemming algorithm.
 ///
-/// Variants are gated by Cargo features of the same snake_case name.
-/// The enum is `#[non_exhaustive]` so new upstream algorithms are not a
-/// major-version break for downstream `match` expressions that keep a
-/// wildcard arm.
+/// Each variant corresponds to one upstream algorithm id (see
+/// [`Self::name`]) and is gated by a Cargo feature of the same
+/// snake_case name. With default features (`all`), every variant is
+/// available.
+///
+/// The enum is `#[non_exhaustive]` so newly added upstream algorithms
+/// are not a major-version break for downstream `match` expressions
+/// that keep a wildcard arm.
+///
+/// Algorithm behavior and documentation live on the
+/// [Snowball website](https://snowballstem.org/).
+///
+/// # Example
+///
+/// ```
+/// use frostem::{Algorithm, Stemmer};
+///
+/// let stemmer = Stemmer::new(Algorithm::English);
+/// assert_eq!(stemmer.algorithm().name(), "english");
+/// ```
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 #[non_exhaustive]
 pub enum Algorithm {
+    /// `arabic` Snowball stemmer.
+    ///
+    /// Enabled by the `arabic` Cargo feature. Canonical id: `"arabic"`.
     #[cfg(feature = "arabic")]
     Arabic,
+    /// `armenian` Snowball stemmer.
+    ///
+    /// Enabled by the `armenian` Cargo feature. Canonical id: `"armenian"`.
     #[cfg(feature = "armenian")]
     Armenian,
+    /// `basque` Snowball stemmer.
+    ///
+    /// Enabled by the `basque` Cargo feature. Canonical id: `"basque"`.
     #[cfg(feature = "basque")]
     Basque,
+    /// `catalan` Snowball stemmer.
+    ///
+    /// Enabled by the `catalan` Cargo feature. Canonical id: `"catalan"`.
     #[cfg(feature = "catalan")]
     Catalan,
+    /// `czech` Snowball stemmer.
+    ///
+    /// Enabled by the `czech` Cargo feature. Canonical id: `"czech"`.
     #[cfg(feature = "czech")]
     Czech,
+    /// `danish` Snowball stemmer.
+    ///
+    /// Enabled by the `danish` Cargo feature. Canonical id: `"danish"`.
     #[cfg(feature = "danish")]
     Danish,
+    /// `dutch` Snowball stemmer.
+    ///
+    /// Enabled by the `dutch` Cargo feature. Canonical id: `"dutch"`.
     #[cfg(feature = "dutch")]
     Dutch,
+    /// `dutch_porter` Snowball stemmer.
+    ///
+    /// Enabled by the `dutch_porter` Cargo feature. Canonical id: `"dutch_porter"`.
     #[cfg(feature = "dutch_porter")]
     DutchPorter,
+    /// `earlymodernenglish` Snowball stemmer.
+    ///
+    /// Enabled by the `earlymodernenglish` Cargo feature. Canonical id: `"earlymodernenglish"`.
     #[cfg(feature = "earlymodernenglish")]
     Earlymodernenglish,
+    /// `english` Snowball stemmer.
+    ///
+    /// Enabled by the `english` Cargo feature. Canonical id: `"english"`.
     #[cfg(feature = "english")]
     English,
+    /// `esperanto` Snowball stemmer.
+    ///
+    /// Enabled by the `esperanto` Cargo feature. Canonical id: `"esperanto"`.
     #[cfg(feature = "esperanto")]
     Esperanto,
+    /// `estonian` Snowball stemmer.
+    ///
+    /// Enabled by the `estonian` Cargo feature. Canonical id: `"estonian"`.
     #[cfg(feature = "estonian")]
     Estonian,
+    /// `finnish` Snowball stemmer.
+    ///
+    /// Enabled by the `finnish` Cargo feature. Canonical id: `"finnish"`.
     #[cfg(feature = "finnish")]
     Finnish,
+    /// `french` Snowball stemmer.
+    ///
+    /// Enabled by the `french` Cargo feature. Canonical id: `"french"`.
     #[cfg(feature = "french")]
     French,
+    /// `german` Snowball stemmer.
+    ///
+    /// Enabled by the `german` Cargo feature. Canonical id: `"german"`.
     #[cfg(feature = "german")]
     German,
+    /// `greek` Snowball stemmer.
+    ///
+    /// Enabled by the `greek` Cargo feature. Canonical id: `"greek"`.
     #[cfg(feature = "greek")]
     Greek,
+    /// `hindi` Snowball stemmer.
+    ///
+    /// Enabled by the `hindi` Cargo feature. Canonical id: `"hindi"`.
     #[cfg(feature = "hindi")]
     Hindi,
+    /// `hungarian` Snowball stemmer.
+    ///
+    /// Enabled by the `hungarian` Cargo feature. Canonical id: `"hungarian"`.
     #[cfg(feature = "hungarian")]
     Hungarian,
+    /// `indonesian` Snowball stemmer.
+    ///
+    /// Enabled by the `indonesian` Cargo feature. Canonical id: `"indonesian"`.
     #[cfg(feature = "indonesian")]
     Indonesian,
+    /// `irish` Snowball stemmer.
+    ///
+    /// Enabled by the `irish` Cargo feature. Canonical id: `"irish"`.
     #[cfg(feature = "irish")]
     Irish,
+    /// `italian` Snowball stemmer.
+    ///
+    /// Enabled by the `italian` Cargo feature. Canonical id: `"italian"`.
     #[cfg(feature = "italian")]
     Italian,
+    /// `lithuanian` Snowball stemmer.
+    ///
+    /// Enabled by the `lithuanian` Cargo feature. Canonical id: `"lithuanian"`.
     #[cfg(feature = "lithuanian")]
     Lithuanian,
+    /// `lovins` Snowball stemmer.
+    ///
+    /// Enabled by the `lovins` Cargo feature. Canonical id: `"lovins"`.
     #[cfg(feature = "lovins")]
     Lovins,
+    /// `nepali` Snowball stemmer.
+    ///
+    /// Enabled by the `nepali` Cargo feature. Canonical id: `"nepali"`.
     #[cfg(feature = "nepali")]
     Nepali,
+    /// `norwegian` Snowball stemmer.
+    ///
+    /// Enabled by the `norwegian` Cargo feature. Canonical id: `"norwegian"`.
     #[cfg(feature = "norwegian")]
     Norwegian,
+    /// `persian` Snowball stemmer.
+    ///
+    /// Enabled by the `persian` Cargo feature. Canonical id: `"persian"`.
     #[cfg(feature = "persian")]
     Persian,
+    /// `polish` Snowball stemmer.
+    ///
+    /// Enabled by the `polish` Cargo feature. Canonical id: `"polish"`.
     #[cfg(feature = "polish")]
     Polish,
+    /// `porter` Snowball stemmer.
+    ///
+    /// Enabled by the `porter` Cargo feature. Canonical id: `"porter"`.
     #[cfg(feature = "porter")]
     Porter,
+    /// `portuguese` Snowball stemmer.
+    ///
+    /// Enabled by the `portuguese` Cargo feature. Canonical id: `"portuguese"`.
     #[cfg(feature = "portuguese")]
     Portuguese,
+    /// `romanian` Snowball stemmer.
+    ///
+    /// Enabled by the `romanian` Cargo feature. Canonical id: `"romanian"`.
     #[cfg(feature = "romanian")]
     Romanian,
+    /// `russian` Snowball stemmer.
+    ///
+    /// Enabled by the `russian` Cargo feature. Canonical id: `"russian"`.
     #[cfg(feature = "russian")]
     Russian,
+    /// `serbian` Snowball stemmer.
+    ///
+    /// Enabled by the `serbian` Cargo feature. Canonical id: `"serbian"`.
     #[cfg(feature = "serbian")]
     Serbian,
+    /// `sesotho` Snowball stemmer.
+    ///
+    /// Enabled by the `sesotho` Cargo feature. Canonical id: `"sesotho"`.
     #[cfg(feature = "sesotho")]
     Sesotho,
+    /// `spanish` Snowball stemmer.
+    ///
+    /// Enabled by the `spanish` Cargo feature. Canonical id: `"spanish"`.
     #[cfg(feature = "spanish")]
     Spanish,
+    /// `swedish` Snowball stemmer.
+    ///
+    /// Enabled by the `swedish` Cargo feature. Canonical id: `"swedish"`.
     #[cfg(feature = "swedish")]
     Swedish,
+    /// `tamil` Snowball stemmer.
+    ///
+    /// Enabled by the `tamil` Cargo feature. Canonical id: `"tamil"`.
     #[cfg(feature = "tamil")]
     Tamil,
+    /// `turkish` Snowball stemmer.
+    ///
+    /// Enabled by the `turkish` Cargo feature. Canonical id: `"turkish"`.
     #[cfg(feature = "turkish")]
     Turkish,
+    /// `yiddish` Snowball stemmer.
+    ///
+    /// Enabled by the `yiddish` Cargo feature. Canonical id: `"yiddish"`.
     #[cfg(feature = "yiddish")]
     Yiddish,
 }
 
 impl Algorithm {
-    /// Canonical Snowball algorithm id (feature name).
+    /// Returns the canonical Snowball algorithm id.
+    ///
+    /// This string is also the Cargo feature name that gates
+    /// the variant (for example `"english"`).
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use frostem::Algorithm;
+    ///
+    /// assert_eq!(Algorithm::English.name(), "english");
+    /// ```
     pub const fn name(self) -> &'static str {
         match self {
             #[cfg(feature = "arabic")]
@@ -170,7 +311,18 @@ impl Algorithm {
         }
     }
 
-    /// All algorithms enabled in this build, in stable name order.
+    /// All algorithms enabled in this build.
+    ///
+    /// Order is stable and sorted by canonical algorithm id.
+    /// Variants whose Cargo features are disabled are omitted.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use frostem::Algorithm;
+    ///
+    /// assert!(!Algorithm::all().is_empty());
+    /// ```
     pub fn all() -> &'static [Algorithm] {
         &[
             #[cfg(feature = "arabic")]
@@ -252,7 +404,26 @@ impl Algorithm {
         ]
     }
 
-    /// Look up an algorithm by name or common alias (case-insensitive).
+    /// Look up an algorithm by name or common alias.
+    ///
+    /// Accepts the canonical id from [`Self::name`] and aliases
+    /// from upstream `libstemmer/modules.txt` (for example
+    /// `"en"` / `"eng"` for English). Comparison is
+    /// case-insensitive after trimming whitespace.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`UnknownAlgorithm`](crate::UnknownAlgorithm) if
+    /// the name is unknown or the matching algorithm's feature
+    /// is disabled in this build.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use frostem::Algorithm;
+    ///
+    /// assert_eq!(Algorithm::from_name("en").unwrap(), Algorithm::English);
+    /// ```
     pub fn from_name(name: &str) -> Result<Self, crate::error::UnknownAlgorithm> {
         let key = name.trim();
         let lower = key.to_ascii_lowercase();
