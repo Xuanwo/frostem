@@ -87,7 +87,7 @@ commit’s UTC `YYYYMMDD` and patch is `0`; otherwise minor is kept and patch
 increments. Daily CI only adds major bumps from `cargo-semver-checks` and
 extra patch bumps for tag/crates.io collisions.
 
-CI runs a daily sync against `main`, and publishes to crates.io when the upstream commit changes, using [Trusted Publishing](https://crates.io/docs/trusted-publishing) (OIDC; no long-lived API token secret).
+CI runs a daily sync against `main`, publishes to crates.io when the upstream commit changes (Trusted Publishing / OIDC), and creates a [GitHub Release](https://github.com/Xuanwo/frostem/releases) whose notes summarize Snowball upstream commits and frostem changes since the previous tag.
 
 ### Trusted Publishing
 

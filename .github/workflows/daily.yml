@@ -44,13 +44,23 @@ jobs:
         with:
           crate: cargo-semver-checks
 
-      - name: Read current upstream pin
+      - name: Read current upstream pin and previous release
         id: pin
         run: |
           if [[ -f upstream-pin.toml ]]; then
             echo "commit=$(sed -n 's/^commit = \"\([^\"]*\)\"/\1/p' upstream-pin.toml)" >> "$GITHUB_OUTPUT"
           else
             echo "commit=" >> "$GITHUB_OUTPUT"
+          fi
+          # Previous crate version / tag (before this sync rewrites Cargo.toml).
+          prev_version=$(sed -n 's/^version = "\([^"]*\)"/\1/p' Cargo.toml | head -1)
+          echo "version=${prev_version}" >> "$GITHUB_OUTPUT"
+          if [[ -n "$prev_version" ]] && git rev-parse "v${prev_version}" >/dev/null 2>&1; then
+            echo "tag=v${prev_version}" >> "$GITHUB_OUTPUT"
+          else
+            # Fall back to latest v* tag on this branch, if any.
+            prev_tag=$(git tag -l 'v*' --sort=-version:refname | head -1 || true)
+            echo "tag=${prev_tag}" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Resolve snowball main HEAD
@@ -157,9 +167,12 @@ jobs:
         if: steps.changed.outputs.changed == 'true'
         run: cargo test
 
-      - name: Commit, tag, and push
+      - name: Commit, push, and create GitHub Release
         if: steps.changed.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
@@ -167,10 +180,27 @@ jobs:
             echo "No file changes after sync (unexpected if commit moved)."
             exit 1
           fi
+          version="${{ steps.version.outputs.version }}"
           git commit -m "chore: sync snowball ${{ steps.upstream.outputs.commit }}"
-          git tag "v${{ steps.version.outputs.version }}"
           git push
-          git push origin "v${{ steps.version.outputs.version }}"
+
+          # Release notes are generated for the GitHub Release body only (not a repo file).
+          notes="${RUNNER_TEMP}/release-notes.md"
+          python3 scripts/generate_release_notes.py \
+            --version "$version" \
+            --old-upstream "${{ steps.pin.outputs.commit }}" \
+            --new-upstream "${{ steps.upstream.outputs.commit }}" \
+            --snowball-dir .snowball-src \
+            --previous-tag "${{ steps.pin.outputs.tag }}" \
+            --previous-version "${{ steps.pin.outputs.version }}" \
+            >"$notes"
+          cat "$notes"
+
+          # Creates the annotated tag and GitHub Release together (no bare git tag push).
+          gh release create "v${version}" \
+            --title "frostem ${version}" \
+            --notes-file "$notes" \
+            --target "$(git rev-parse HEAD)"
 
       # Trusted Publishing: short-lived token via OIDC (no CARGO_REGISTRY_TOKEN secret).
       # Requires a Trusted Publisher on crates.io for this repo + workflow file daily.yml.
