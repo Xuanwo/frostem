@@ -44,14 +44,16 @@ this repository, not exposed as Rust API. Consumers should rely on the crate
 | Component | Meaning |
 |-----------|---------|
 | **major** | frostem public Rust API |
-| **minor** | UTC date (`YYYYMMDD`) of the upstream commit used for generation |
-| **patch** | frostem-only changes, or a same-day re-release |
+| **minor** | UTC date (`YYYYMMDD`) of the upstream commit that last changed `algorithms/` |
+| **patch** | Releases with no `algorithms/` change (codegen/runtime-only upstream sync, frostem-only fixes, collisions) |
 
-Example: `1.20260729.0` — facade API v1, generated from an upstream commit on 2026-07-29 UTC.
+Example: `1.20260729.0` — facade API v1; last upstream **algorithm** change on 2026-07-29 UTC.
 
 - API breaks are detected with [`cargo-semver-checks`](https://github.com/obi1kenobi/cargo-semver-checks) and bump **major**.
-- Upstream `main` movement bumps **minor** to that commit’s UTC date (daily automation; always publishes when HEAD advanced).
-- Same calendar day re-releases use **patch** (strategy A).
+- Daily automation publishes whenever upstream `main` HEAD advances.
+- **minor** advances only when upstream `algorithms/` differs from the previous pin (stem definitions / new or removed `.sbl` files). The minor number is that commit’s UTC `YYYYMMDD`.
+- Upstream movement that does **not** touch `algorithms/` (compiler, runtime, docs, other backends, …) keeps the previous minor and bumps **patch**.
+- Tag or crates.io version collisions also bump **patch**.
 
 `Algorithm` is `#[non_exhaustive]`: new upstream languages are a minor change, not a major break.
 
@@ -74,9 +76,16 @@ Options:
 
 ```text
 --snowball-dir DIR   use an existing checkout instead of .snowball-src
---major N            set major (default: keep current)
---patch N            set patch (default: 0)
+--major N            override major (default: keep current)
+--minor YYYYMMDD     override minor (default: algorithms/ gate)
+--patch N            override patch (default: algorithms/ gate)
 ```
+
+`scripts/sync_from_snowball.py` applies the algorithms gate locally and in CI:
+if upstream `algorithms/` changed vs `upstream-pin.toml`, minor becomes the
+commit’s UTC `YYYYMMDD` and patch is `0`; otherwise minor is kept and patch
+increments. Daily CI only adds major bumps from `cargo-semver-checks` and
+extra patch bumps for tag/crates.io collisions.
 
 CI runs a daily sync against `main`, and publishes to crates.io when the upstream commit changes, using [Trusted Publishing](https://crates.io/docs/trusted-publishing) (OIDC; no long-lived API token secret).
 

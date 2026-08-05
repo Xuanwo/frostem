@@ -6,9 +6,10 @@
 //! # Versioning
 //!
 //! - **major** — frostem public Rust API
-//! - **minor** — UTC date (`YYYYMMDD`) of the upstream commit this release
-//!   was generated from
-//! - **patch** — frostem-only fixes, or a same-day re-release
+//! - **minor** — UTC date (`YYYYMMDD`) of the upstream commit that last
+//!   changed `algorithms/` (stem definitions)
+//! - **patch** — releases with no `algorithms/` change (codegen/runtime-only
+//!   upstream sync, frostem-only fixes, version collisions)
 //!
 //! Upstream commit pins live in the repository (`upstream-pin.toml`), not in
 //! the public Rust API.

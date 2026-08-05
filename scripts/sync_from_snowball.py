@@ -9,13 +9,16 @@ Generates:
   - Cargo.toml feature block (between AUTO-FEATURES markers)
   - upstream-pin.toml (commit provenance for CI; not a Rust API)
 
-Version policy:
-  major  — Rust facade API (left unchanged by this script unless --major)
-  minor  — upstream commit time as UTC YYYYMMDD
-  patch  — 0 on sync; bump with --patch if that version already exists (caller)
+Version policy (shared by local runs and daily CI):
+  major  — Rust facade API (left unchanged unless --major)
+  minor  — UTC YYYYMMDD of the upstream commit when algorithms/ changed
+           relative to upstream-pin.toml; otherwise keep previous minor
+  patch  — 0 when algorithms/ changed; previous patch + 1 otherwise
+  --major / --minor / --patch override the corresponding component when set
+           (CI uses this for API breaks and tag/crates.io collisions)
 
 Usage:
-  scripts/sync_from_snowball.py [--snowball-dir DIR] [--major N] [--patch N]
+  scripts/sync_from_snowball.py [--snowball-dir DIR] [--major N] [--minor YYYYMMDD] [--patch N]
 """
 
 from __future__ import annotations
@@ -383,6 +386,137 @@ def parse_current_version() -> tuple[int, str, int]:
     return int(m.group(1)), m.group(2), int(m.group(3))
 
 
+def parse_pin_commit() -> str | None:
+    pin = ROOT / "upstream-pin.toml"
+    if not pin.is_file():
+        return None
+    m = re.search(r'(?m)^commit\s*=\s*"([^"]+)"', pin.read_text(encoding="utf-8"))
+    return m.group(1) if m else None
+
+
+def git_commit_exists(snowball_dir: Path, commit: str) -> bool:
+    r = subprocess.run(
+        ["git", "cat-file", "-e", f"{commit}^{{commit}}"],
+        cwd=snowball_dir,
+        capture_output=True,
+        text=True,
+    )
+    return r.returncode == 0
+
+
+def ensure_commit_available(snowball_dir: Path, commit: str) -> bool:
+    """Make sure `commit` is available in snowball_dir (shallow clones often lack it)."""
+    if git_commit_exists(snowball_dir, commit):
+        return True
+    r = subprocess.run(
+        ["git", "fetch", "--depth", "1", "origin", commit],
+        cwd=snowball_dir,
+        capture_output=True,
+        text=True,
+    )
+    if r.returncode != 0:
+        print(
+            f"warning: could not fetch {commit} for algorithms/ diff: {r.stderr.strip()}",
+            flush=True,
+        )
+        return False
+    return git_commit_exists(snowball_dir, commit)
+
+
+def algorithms_changed(
+    snowball_dir: Path, old_commit: str | None, new_commit: str
+) -> bool:
+    """True when upstream algorithms/ differs between pin and HEAD (or cannot tell)."""
+    if not old_commit:
+        print("No previous upstream pin; treating algorithms/ as changed", flush=True)
+        return True
+    if old_commit == new_commit:
+        print(
+            f"Upstream pin already at {new_commit}; algorithms/ unchanged for versioning",
+            flush=True,
+        )
+        return False
+    if not ensure_commit_available(snowball_dir, old_commit):
+        print(
+            "warning: treating algorithms/ as changed (conservative)",
+            flush=True,
+        )
+        return True
+    r = subprocess.run(
+        ["git", "diff", "--quiet", old_commit, new_commit, "--", "algorithms/"],
+        cwd=snowball_dir,
+        capture_output=True,
+        text=True,
+    )
+    if r.returncode == 0:
+        print(
+            f"Upstream algorithms/ unchanged ({old_commit[:12]} -> {new_commit[:12]})",
+            flush=True,
+        )
+        return False
+    if r.returncode == 1:
+        print(
+            f"Upstream algorithms/ changed ({old_commit[:12]} -> {new_commit[:12]})",
+            flush=True,
+        )
+        stat = subprocess.run(
+            ["git", "diff", "--stat", old_commit, new_commit, "--", "algorithms/"],
+            cwd=snowball_dir,
+            capture_output=True,
+            text=True,
+        )
+        if stat.stdout.strip():
+            print(stat.stdout.rstrip(), flush=True)
+        return True
+    print(
+        f"warning: git diff failed ({r.stderr.strip()}); treating algorithms/ as changed",
+        flush=True,
+    )
+    return True
+
+
+def resolve_version(
+    *,
+    snowball_dir: Path,
+    commit: str,
+    commit_time: str,
+    pin_commit: str | None,
+    prev_major: int,
+    prev_minor: str,
+    prev_patch: int,
+    major_override: int | None,
+    minor_override: str | None,
+    patch_override: int | None,
+) -> tuple[int, str, int, bool]:
+    """Return (major, minor, patch, algorithms_changed).
+
+    Default bump uses the algorithms/ gate against the pre-sync pin. Explicit
+    --major/--minor/--patch overrides replace only that component.
+    """
+    changed = algorithms_changed(snowball_dir, pin_commit, commit)
+    commit_minor = utc_yyyymmdd(commit_time)
+
+    major = major_override if major_override is not None else prev_major
+
+    if minor_override is not None:
+        if not re.fullmatch(r"\d{8}", minor_override):
+            raise SystemExit(f"--minor must be YYYYMMDD, got {minor_override!r}")
+        minor = minor_override
+    elif changed:
+        minor = commit_minor
+    else:
+        minor = prev_minor
+
+    if patch_override is not None:
+        patch = patch_override
+    elif changed:
+        patch = 0
+    else:
+        patch = prev_patch + 1
+
+    return major, minor, patch, changed
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -398,10 +532,22 @@ def main() -> int:
         help="Override major version (default: keep current Cargo.toml major)",
     )
     parser.add_argument(
+        "--minor",
+        type=str,
+        default=None,
+        help=(
+            "Override minor version (default: algorithms/ gate — commit YYYYMMDD "
+            "when algorithms changed, else previous minor)"
+        ),
+    )
+    parser.add_argument(
         "--patch",
         type=int,
-        default=0,
-        help="Patch number to write (default: 0)",
+        default=None,
+        help=(
+            "Override patch number (default: algorithms/ gate — 0 when algorithms "
+            "changed, else previous patch + 1)"
+        ),
     )
     parser.add_argument(
         "--skip-build",
@@ -409,6 +555,10 @@ def main() -> int:
         help="Skip make/snowball generation; reuse existing generated files in tree",
     )
     args = parser.parse_args()
+
+    # Capture pin + version before any rewrite so local and CI share one gate.
+    pin_commit = parse_pin_commit()
+    prev_major, prev_minor, prev_patch = parse_current_version()
 
     snowball_dir = ensure_snowball(args.snowball_dir)
     algorithms = discover_algorithms(snowball_dir)
@@ -420,11 +570,24 @@ def main() -> int:
     copy_runtime(snowball_dir)
 
     commit, commit_time, described = git_head_metadata(snowball_dir)
-    minor = utc_yyyymmdd(commit_time)
-    major_cur, _, _ = parse_current_version()
-    major = args.major if args.major is not None else major_cur
-    version = f"{major}.{minor}.{args.patch}"
-    print(f"upstream {commit} @ {commit_time} -> version {version}")
+    major, minor, patch, alg_changed = resolve_version(
+        snowball_dir=snowball_dir,
+        commit=commit,
+        commit_time=commit_time,
+        pin_commit=pin_commit,
+        prev_major=prev_major,
+        prev_minor=prev_minor,
+        prev_patch=prev_patch,
+        major_override=args.major,
+        minor_override=args.minor,
+        patch_override=args.patch,
+    )
+    version = f"{major}.{minor}.{patch}"
+    print(
+        f"upstream {commit} @ {commit_time} -> version {version} "
+        f"(algorithms_changed={alg_changed})",
+        flush=True,
+    )
 
     aliases = parse_modules_aliases(snowball_dir / "libstemmer" / "modules.txt")
     # Ensure lovins and any algo missing from modules still have self-alias.
