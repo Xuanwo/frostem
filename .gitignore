@@ -1,6 +1,8 @@
 /target
 /Cargo.lock
 .snowball-src/
+semver.out
+semver.err
 .DS_Store
 *.swp
 *.swo

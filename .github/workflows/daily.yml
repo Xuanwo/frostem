@@ -93,17 +93,21 @@ jobs:
           minor=$(sed -n 's/^version = \"[0-9]*\.\([0-9]*\)\..*/\1/p' Cargo.toml)
           patch=0
 
+          # Keep CI logs out of the repo working tree (avoid dirty publish / accidental commit).
+          semver_out="${RUNNER_TEMP}/semver.out"
+          semver_err="${RUNNER_TEMP}/semver.err"
+
           set +e
-          cargo semver-checks check-release >semver.out 2>semver.err
+          cargo semver-checks check-release >"$semver_out" 2>"$semver_err"
           rc=$?
           set -e
-          cat semver.out || true
-          cat semver.err || true
+          cat "$semver_out" || true
+          cat "$semver_err" || true
 
           if [[ $rc -ne 0 ]]; then
             if grep -qiE \
               'not been published|could not|no crate|404|failed to|unable to|does not exist|never published|not found' \
-              semver.err semver.out; then
+              "$semver_err" "$semver_out"; then
               echo "semver-checks: no usable baseline; keeping major=$major"
             else
               echo "semver-checks reported API break; bumping major"
@@ -162,8 +166,12 @@ jobs:
         id: crates-io-auth
         uses: rust-lang/crates-io-auth-action@v1
 
+      # Drop the temporary snowball checkout before publish. cargo publish refuses a dirty
+      # tree; nested .snowball-src can leave uncommitted files that fail packaging.
       - name: Publish to crates.io
         if: steps.changed.outputs.changed == 'true'
         env:
           CARGO_REGISTRY_TOKEN: ${{ steps.crates-io-auth.outputs.token }}
-        run: cargo publish
+        run: |
+          rm -rf .snowball-src
+          cargo publish
