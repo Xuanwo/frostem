@@ -662,9 +662,8 @@ impl Algorithm {
             "yid" => Ok(Self::Yiddish),
             #[cfg(feature = "yiddish")]
             "yiddish" => Ok(Self::Yiddish),
-            _ => Err(crate::error::UnknownAlgorithm {
-                name: key.to_string(),
-            }),
+            _ => Err(crate::error::UnknownAlgorithm { name: key.to_string() }),
         }
     }
 }
+

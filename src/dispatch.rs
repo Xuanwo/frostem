@@ -86,3 +86,4 @@ pub(crate) fn stem_fn(algorithm: Algorithm) -> StemFn {
         Algorithm::Yiddish => algorithms::yiddish_stemmer::stem,
     }
 }
+

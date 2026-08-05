@@ -5,11 +5,12 @@
 #![allow(unused_mut)]
 #![allow(unused_parens)]
 #![allow(unused_variables)]
-use snowball::Among;
 use snowball::SnowballEnv;
+use snowball::Among;
 
 #[derive(Clone)]
-struct Context {}
+struct Context {
+}
 
 static A_0: &'static [Among<Context>; 23] = &[
     Among("բար", -1, 1, None),
@@ -217,9 +218,10 @@ static A_3: &'static [Among<Context>; 57] = &[
 static G_v: &'static [u8; 5] = &[209, 4, 128, 0, 18];
 
 pub fn stem(env: &mut SnowballEnv) -> bool {
-    let mut context = &mut Context {};
-    let mut i_p2: i32;
-    let mut i_pV: i32;
+    let mut context = &mut Context {
+    };
+    let mut i_p2 : i32;
+    let mut i_pV : i32;
     'lab0: loop {
         i_pV = env.limit;
         i_p2 = env.limit;
@@ -304,5 +306,5 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
     env.cursor = env.limit - v_6;
     env.limit_backward = v_2;
     env.cursor = env.limit_backward;
-    return true;
+    return true
 }

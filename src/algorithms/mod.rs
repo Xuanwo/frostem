@@ -113,3 +113,4 @@ pub mod turkish_stemmer;
 
 #[cfg(feature = "yiddish")]
 pub mod yiddish_stemmer;
+

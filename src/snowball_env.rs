@@ -1,5 +1,5 @@
-use snowball::Among;
 use std::borrow::Cow;
+use snowball::Among;
 
 #[derive(Debug, Clone)]
 pub struct SnowballEnv<'a> {
@@ -10,6 +10,7 @@ pub struct SnowballEnv<'a> {
     pub bra: i32,
     pub ket: i32,
 }
+
 
 impl<'a> SnowballEnv<'a> {
     pub fn create(value: &'a str) -> Self {
@@ -82,11 +83,8 @@ impl<'a> SnowballEnv<'a> {
         if (self.cursor - self.limit_backward) < s.len() as i32 {
             false
             // Check if cursor -s.len is a char boundary. if not well... return false obv
-        } else if !self
-            .current
-            .is_char_boundary(self.cursor as usize - s.len())
-            || !self.current[self.cursor as usize - s.len()..].starts_with(s)
-        {
+        } else if !self.current.is_char_boundary(self.cursor as usize - s.len()) ||
+                  !self.current[self.cursor as usize - s.len()..].starts_with(s) {
             false
         } else {
             self.cursor -= s.len() as i32;
@@ -331,6 +329,7 @@ impl<'a> SnowballEnv<'a> {
         return false;
     }
 
+
     /// Helper function that removes the string slice between `bra` and `ket`
     pub fn slice_del(&mut self) {
         self.slice_from("")
@@ -376,8 +375,7 @@ impl<'a> SnowballEnv<'a> {
                     diff = -1;
                     break;
                 }
-                diff = self.current.as_bytes()[(c + common) as usize] as i32
-                    - w.0.as_bytes()[lvar as usize] as i32;
+                diff = self.current.as_bytes()[(c + common) as usize] as i32 - w.0.as_bytes()[lvar as usize] as i32;
                 if diff != 0 {
                     break;
                 }
@@ -406,7 +404,7 @@ impl<'a> SnowballEnv<'a> {
 
         loop {
             let w = &amongs[i as usize];
-            if common_i >= w.0.len() as i32 {
+            if common_i >= w.0.len() as i32{
                 self.cursor = c + w.0.len() as i32;
                 if let Some(ref method) = w.3 {
                     if method(self, context) {
@@ -450,8 +448,7 @@ impl<'a> SnowballEnv<'a> {
                     diff = -1;
                     break;
                 }
-                diff = self.current.as_bytes()[(c - common - 1) as usize] as i32
-                    - w.0.as_bytes()[lvar] as i32;
+                diff = self.current.as_bytes()[(c - common - 1) as usize] as i32 - w.0.as_bytes()[lvar] as i32;
                 if diff != 0 {
                     break;
                 }

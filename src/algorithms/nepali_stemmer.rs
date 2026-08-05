@@ -5,11 +5,12 @@
 #![allow(unused_mut)]
 #![allow(unused_parens)]
 #![allow(unused_variables)]
-use snowball::Among;
 use snowball::SnowballEnv;
+use snowball::Among;
 
 #[derive(Clone)]
-struct Context {}
+struct Context {
+}
 
 static A_0: &'static [Among<Context>; 17] = &[
     Among("\u{915}\u{940}", -1, 2, None),
@@ -132,7 +133,8 @@ static A_2: &'static [Among<Context>; 91] = &[
 ];
 
 pub fn stem(env: &mut SnowballEnv) -> bool {
-    let mut context = &mut Context {};
+    let mut context = &mut Context {
+    };
     let mut among_var;
     env.limit_backward = env.cursor;
     env.cursor = env.limit;
@@ -148,40 +150,36 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             1 => {
                 env.slice_del();
             }
-            2 => 'lab1: loop {
-                'lab2: loop {
-                    if !env.eq_s_b(&"\u{90F}") {
-                        break 'lab2;
+            2 => {
+                'lab1: loop {
+                    'lab2: loop {
+                        if !env.eq_s_b(&"\u{90F}") {
+                            break 'lab2;
+                        }
+                        break 'lab1;
                     }
+                    'lab3: loop {
+                        if !env.eq_s_b(&"\u{947}") {
+                            break 'lab3;
+                        }
+                        break 'lab1;
+                    }
+                    env.slice_del();
                     break 'lab1;
                 }
-                'lab3: loop {
-                    if !env.eq_s_b(&"\u{947}") {
-                        break 'lab3;
-                    }
-                    break 'lab1;
-                }
-                env.slice_del();
-                break 'lab1;
-            },
-            _ => (),
+            }
+            _ => ()
         }
         break 'lab0;
     }
     env.cursor = env.limit - v_1;
-    'replab4: loop {
+    'replab4: loop{
         let v_2 = env.limit - env.cursor;
         'lab5: for _ in 0..1 {
             let v_3 = env.limit - env.cursor;
             'lab6: loop {
                 env.ket = env.cursor;
-                if (env.cursor - 2 <= env.limit_backward
-                    || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 4 as u8
-                    || ((262 as i32
-                        >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f))
-                        & 1)
-                        == 0)
-                {
+                if (env.cursor - 2 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 4 as u8 || ((262 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f)) & 1) == 0) {
                     break 'lab6;
                 }
 
@@ -224,7 +222,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                         }
                         env.slice_del();
                     }
-                    _ => (),
+                    _ => ()
                 }
                 break 'lab6;
             }
@@ -241,5 +239,5 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
         break 'replab4;
     }
     env.cursor = env.limit_backward;
-    return true;
+    return true
 }

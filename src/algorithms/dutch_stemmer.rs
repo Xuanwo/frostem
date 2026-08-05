@@ -5,8 +5,8 @@
 #![allow(unused_mut)]
 #![allow(unused_parens)]
 #![allow(unused_variables)]
-use snowball::Among;
 use snowball::SnowballEnv;
+use snowball::Among;
 
 #[derive(Clone)]
 struct Context {
@@ -137,7 +137,10 @@ static A_7: &'static [Among<Context>; 22] = &[
     Among("zz", 20, 20, None),
 ];
 
-static A_8: &'static [Among<Context>; 2] = &[Among("d", -1, 1, None), Among("t", -1, 2, None)];
+static A_8: &'static [Among<Context>; 2] = &[
+    Among("d", -1, 1, None),
+    Among("t", -1, 2, None),
+];
 
 static A_9: &'static [Among<Context>; 6] = &[
     Among("", -1, -1, None),
@@ -148,27 +151,25 @@ static A_9: &'static [Among<Context>; 6] = &[
     Among("vare", 0, 1, None),
 ];
 
-static A_10: &'static [Among<Context>; 2] = &[Among("ë", -1, 1, None), Among("ï", -1, 2, None)];
+static A_10: &'static [Among<Context>; 2] = &[
+    Among("ë", -1, 1, None),
+    Among("ï", -1, 2, None),
+];
 
-static A_11: &'static [Among<Context>; 2] = &[Among("ë", -1, 1, None), Among("ï", -1, 2, None)];
+static A_11: &'static [Among<Context>; 2] = &[
+    Among("ë", -1, 1, None),
+    Among("ï", -1, 2, None),
+];
 
 static G_E: &'static [u8; 17] = &[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 120];
 
-static G_AIOU: &'static [u8; 20] = &[
-    1, 65, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 11, 120, 46, 15,
-];
+static G_AIOU: &'static [u8; 20] = &[1, 65, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 11, 120, 46, 15];
 
-static G_AEIOU: &'static [u8; 20] = &[
-    17, 65, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 139, 127, 46, 15,
-];
+static G_AEIOU: &'static [u8; 20] = &[17, 65, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 139, 127, 46, 15];
 
-static G_v: &'static [u8; 20] = &[
-    17, 65, 16, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 139, 127, 46, 15,
-];
+static G_v: &'static [u8; 20] = &[17, 65, 16, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 139, 127, 46, 15];
 
-static G_v_WX: &'static [u8; 20] = &[
-    17, 65, 208, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 139, 127, 46, 15,
-];
+static G_v_WX: &'static [u8; 20] = &[17, 65, 208, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 139, 127, 46, 15];
 
 fn r_V(env: &mut SnowballEnv, context: &mut Context) -> bool {
     let v_1 = env.limit - env.cursor;
@@ -185,7 +186,7 @@ fn r_V(env: &mut SnowballEnv, context: &mut Context) -> bool {
         break 'lab0;
     }
     env.cursor = env.limit - v_1;
-    return true;
+    return true
 }
 
 fn r_C(env: &mut SnowballEnv, context: &mut Context) -> bool {
@@ -200,7 +201,7 @@ fn r_C(env: &mut SnowballEnv, context: &mut Context) -> bool {
         return false;
     }
     env.cursor = env.limit - v_1;
-    return true;
+    return true
 }
 
 fn r_lengthen_V(env: &mut SnowballEnv, context: &mut Context) -> bool {
@@ -300,21 +301,18 @@ fn r_lengthen_V(env: &mut SnowballEnv, context: &mut Context) -> bool {
             4 => {
                 env.slice_from("iee");
             }
-            _ => (),
+            _ => ()
         }
         break 'lab0;
     }
     env.cursor = env.limit - v_1;
-    return true;
+    return true
 }
 
 fn r_Step_1c(env: &mut SnowballEnv, context: &mut Context) -> bool {
     let mut among_var;
     env.ket = env.cursor;
-    if (env.cursor <= env.limit_backward
-        || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 100 as u8
-            && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 116 as u8))
-    {
+    if (env.cursor <= env.limit_backward || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 100 as u8 && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 116 as u8)) {
         return false;
     }
 
@@ -384,9 +382,9 @@ fn r_Step_1c(env: &mut SnowballEnv, context: &mut Context) -> bool {
             env.cursor = env.limit - v_4;
             env.slice_del();
         }
-        _ => (),
+        _ => ()
     }
-    return true;
+    return true
 }
 
 fn r_measure(env: &mut SnowballEnv, context: &mut Context) -> bool {
@@ -394,7 +392,7 @@ fn r_measure(env: &mut SnowballEnv, context: &mut Context) -> bool {
     context.i_p2 = env.limit;
     let v_1 = env.cursor;
     'lab0: loop {
-        'replab1: loop {
+        'replab1: loop{
             'lab2: for _ in 0..1 {
                 if !env.out_grouping(G_v, 97, 252) {
                     break 'lab2;
@@ -404,7 +402,7 @@ fn r_measure(env: &mut SnowballEnv, context: &mut Context) -> bool {
             break 'replab1;
         }
         let mut v_2 = 1;
-        'replab3: loop {
+        'replab3: loop{
             let v_3 = env.cursor;
             'lab4: for _ in 0..1 {
                 'lab5: loop {
@@ -432,7 +430,7 @@ fn r_measure(env: &mut SnowballEnv, context: &mut Context) -> bool {
             break 'lab0;
         }
         context.i_p1 = env.cursor;
-        'replab7: loop {
+        'replab7: loop{
             'lab8: for _ in 0..1 {
                 if !env.out_grouping(G_v, 97, 252) {
                     break 'lab8;
@@ -442,7 +440,7 @@ fn r_measure(env: &mut SnowballEnv, context: &mut Context) -> bool {
             break 'replab7;
         }
         let mut v_4 = 1;
-        'replab9: loop {
+        'replab9: loop{
             let v_5 = env.cursor;
             'lab10: for _ in 0..1 {
                 'lab11: loop {
@@ -473,7 +471,7 @@ fn r_measure(env: &mut SnowballEnv, context: &mut Context) -> bool {
         break 'lab0;
     }
     env.cursor = v_1;
-    return true;
+    return true
 }
 
 pub fn stem(env: &mut SnowballEnv) -> bool {
@@ -483,8 +481,8 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
         S_ch: String::new(),
     };
     let mut among_var;
-    let mut b_GE_removed: bool;
-    let mut b_stemmed: bool;
+    let mut b_GE_removed : bool;
+    let mut b_stemmed : bool;
     b_stemmed = false;
     r_measure(env, context);
     env.limit_backward = env.cursor;
@@ -492,13 +490,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
     let v_1 = env.limit - env.cursor;
     'lab0: loop {
         env.ket = env.cursor;
-        if (env.cursor <= env.limit_backward
-            || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8
-            || ((540704 as i32
-                >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f))
-                & 1)
-                == 0)
-        {
+        if (env.cursor <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8 || ((540704 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f)) & 1) == 0) {
             break 'lab0;
         }
 
@@ -537,50 +529,52 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                 }
                 env.slice_from("ie");
             }
-            4 => 'lab2: loop {
-                let v_3 = env.limit - env.cursor;
-                'lab3: loop {
-                    let v_4 = env.limit - env.cursor;
-                    if !env.eq_s_b(&"ar") {
-                        break 'lab3;
+            4 => {
+                'lab2: loop {
+                    let v_3 = env.limit - env.cursor;
+                    'lab3: loop {
+                        let v_4 = env.limit - env.cursor;
+                        if !env.eq_s_b(&"ar") {
+                            break 'lab3;
+                        }
+                        if context.i_p1 > env.cursor {
+                            break 'lab3;
+                        }
+                        if !r_C(env, context) {
+                            break 'lab3;
+                        }
+                        env.cursor = env.limit - v_4;
+                        env.slice_del();
+                        r_lengthen_V(env, context);
+                        break 'lab2;
                     }
+                    env.cursor = env.limit - v_3;
+                    'lab4: loop {
+                        let v_5 = env.limit - env.cursor;
+                        if !env.eq_s_b(&"er") {
+                            break 'lab4;
+                        }
+                        if context.i_p1 > env.cursor {
+                            break 'lab4;
+                        }
+                        if !r_C(env, context) {
+                            break 'lab4;
+                        }
+                        env.cursor = env.limit - v_5;
+                        env.slice_del();
+                        break 'lab2;
+                    }
+                    env.cursor = env.limit - v_3;
                     if context.i_p1 > env.cursor {
-                        break 'lab3;
+                        break 'lab0;
                     }
                     if !r_C(env, context) {
-                        break 'lab3;
+                        break 'lab0;
                     }
-                    env.cursor = env.limit - v_4;
-                    env.slice_del();
-                    r_lengthen_V(env, context);
+                    env.slice_from("e");
                     break 'lab2;
                 }
-                env.cursor = env.limit - v_3;
-                'lab4: loop {
-                    let v_5 = env.limit - env.cursor;
-                    if !env.eq_s_b(&"er") {
-                        break 'lab4;
-                    }
-                    if context.i_p1 > env.cursor {
-                        break 'lab4;
-                    }
-                    if !r_C(env, context) {
-                        break 'lab4;
-                    }
-                    env.cursor = env.limit - v_5;
-                    env.slice_del();
-                    break 'lab2;
-                }
-                env.cursor = env.limit - v_3;
-                if context.i_p1 > env.cursor {
-                    break 'lab0;
-                }
-                if !r_C(env, context) {
-                    break 'lab0;
-                }
-                env.slice_from("e");
-                break 'lab2;
-            },
+            }
             5 => {
                 if context.i_p1 > env.cursor {
                     break 'lab0;
@@ -596,77 +590,79 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                 }
                 env.slice_from("au");
             }
-            7 => 'lab5: loop {
-                let v_6 = env.limit - env.cursor;
-                'lab6: loop {
-                    if !env.eq_s_b(&"hed") {
-                        break 'lab6;
+            7 => {
+                'lab5: loop {
+                    let v_6 = env.limit - env.cursor;
+                    'lab6: loop {
+                        if !env.eq_s_b(&"hed") {
+                            break 'lab6;
+                        }
+                        if context.i_p1 > env.cursor {
+                            break 'lab6;
+                        }
+                        env.bra = env.cursor;
+                        env.slice_from("heid");
+                        break 'lab5;
                     }
-                    if context.i_p1 > env.cursor {
-                        break 'lab6;
+                    env.cursor = env.limit - v_6;
+                    'lab7: loop {
+                        if !env.eq_s_b(&"nd") {
+                            break 'lab7;
+                        }
+                        env.slice_del();
+                        break 'lab5;
                     }
-                    env.bra = env.cursor;
-                    env.slice_from("heid");
-                    break 'lab5;
-                }
-                env.cursor = env.limit - v_6;
-                'lab7: loop {
-                    if !env.eq_s_b(&"nd") {
-                        break 'lab7;
+                    env.cursor = env.limit - v_6;
+                    'lab8: loop {
+                        if !env.eq_s_b(&"d") {
+                            break 'lab8;
+                        }
+                        if context.i_p1 > env.cursor {
+                            break 'lab8;
+                        }
+                        if !r_C(env, context) {
+                            break 'lab8;
+                        }
+                        env.bra = env.cursor;
+                        env.slice_del();
+                        break 'lab5;
                     }
-                    env.slice_del();
-                    break 'lab5;
-                }
-                env.cursor = env.limit - v_6;
-                'lab8: loop {
-                    if !env.eq_s_b(&"d") {
-                        break 'lab8;
-                    }
-                    if context.i_p1 > env.cursor {
-                        break 'lab8;
-                    }
-                    if !r_C(env, context) {
-                        break 'lab8;
-                    }
-                    env.bra = env.cursor;
-                    env.slice_del();
-                    break 'lab5;
-                }
-                env.cursor = env.limit - v_6;
-                'lab9: loop {
-                    'lab10: loop {
-                        'lab11: loop {
-                            if !env.eq_s_b(&"i") {
-                                break 'lab11;
+                    env.cursor = env.limit - v_6;
+                    'lab9: loop {
+                        'lab10: loop {
+                            'lab11: loop {
+                                if !env.eq_s_b(&"i") {
+                                    break 'lab11;
+                                }
+                                break 'lab10;
+                            }
+                            if !env.eq_s_b(&"j") {
+                                break 'lab9;
                             }
                             break 'lab10;
                         }
-                        if !env.eq_s_b(&"j") {
+                        if !r_V(env, context) {
                             break 'lab9;
                         }
-                        break 'lab10;
+                        env.slice_del();
+                        break 'lab5;
                     }
-                    if !r_V(env, context) {
-                        break 'lab9;
+                    env.cursor = env.limit - v_6;
+                    if context.i_p1 > env.cursor {
+                        break 'lab0;
+                    }
+                    if !r_C(env, context) {
+                        break 'lab0;
                     }
                     env.slice_del();
+                    r_lengthen_V(env, context);
                     break 'lab5;
                 }
-                env.cursor = env.limit - v_6;
-                if context.i_p1 > env.cursor {
-                    break 'lab0;
-                }
-                if !r_C(env, context) {
-                    break 'lab0;
-                }
-                env.slice_del();
-                r_lengthen_V(env, context);
-                break 'lab5;
-            },
+            }
             8 => {
                 env.slice_from("nd");
             }
-            _ => (),
+            _ => ()
         }
         b_stemmed = true;
         break 'lab0;
@@ -675,9 +671,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
     let v_7 = env.limit - env.cursor;
     'lab12: loop {
         env.ket = env.cursor;
-        if (env.cursor - 1 <= env.limit_backward
-            || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 101 as u8)
-        {
+        if (env.cursor - 1 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 101 as u8) {
             break 'lab12;
         }
 
@@ -687,111 +681,113 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
         }
         env.bra = env.cursor;
         match among_var {
-            1 => 'lab13: loop {
-                let v_8 = env.limit - env.cursor;
-                'lab14: loop {
-                    if !env.eq_s_b(&"'t") {
-                        break 'lab14;
+            1 => {
+                'lab13: loop {
+                    let v_8 = env.limit - env.cursor;
+                    'lab14: loop {
+                        if !env.eq_s_b(&"'t") {
+                            break 'lab14;
+                        }
+                        env.bra = env.cursor;
+                        env.slice_del();
+                        break 'lab13;
                     }
-                    env.bra = env.cursor;
-                    env.slice_del();
-                    break 'lab13;
-                }
-                env.cursor = env.limit - v_8;
-                'lab15: loop {
-                    if !env.eq_s_b(&"et") {
-                        break 'lab15;
+                    env.cursor = env.limit - v_8;
+                    'lab15: loop {
+                        if !env.eq_s_b(&"et") {
+                            break 'lab15;
+                        }
+                        env.bra = env.cursor;
+                        if context.i_p1 > env.cursor {
+                            break 'lab15;
+                        }
+                        if !r_C(env, context) {
+                            break 'lab15;
+                        }
+                        env.slice_del();
+                        break 'lab13;
                     }
-                    env.bra = env.cursor;
-                    if context.i_p1 > env.cursor {
-                        break 'lab15;
+                    env.cursor = env.limit - v_8;
+                    'lab16: loop {
+                        if !env.eq_s_b(&"rnt") {
+                            break 'lab16;
+                        }
+                        env.bra = env.cursor;
+                        env.slice_from("rn");
+                        break 'lab13;
                     }
-                    if !r_C(env, context) {
-                        break 'lab15;
-                    }
-                    env.slice_del();
-                    break 'lab13;
-                }
-                env.cursor = env.limit - v_8;
-                'lab16: loop {
-                    if !env.eq_s_b(&"rnt") {
-                        break 'lab16;
-                    }
-                    env.bra = env.cursor;
-                    env.slice_from("rn");
-                    break 'lab13;
-                }
-                env.cursor = env.limit - v_8;
-                'lab17: loop {
-                    if !env.eq_s_b(&"t") {
-                        break 'lab17;
-                    }
-                    env.bra = env.cursor;
-                    if context.i_p1 > env.cursor {
-                        break 'lab17;
-                    }
-                    let v_9 = env.limit - env.cursor;
-                    if env.cursor <= env.limit_backward {
-                        break 'lab17;
-                    }
-                    env.previous_char();
-                    'lab18: loop {
-                        'lab19: loop {
-                            if !env.in_grouping_b(G_v, 97, 252) {
-                                break 'lab19;
+                    env.cursor = env.limit - v_8;
+                    'lab17: loop {
+                        if !env.eq_s_b(&"t") {
+                            break 'lab17;
+                        }
+                        env.bra = env.cursor;
+                        if context.i_p1 > env.cursor {
+                            break 'lab17;
+                        }
+                        let v_9 = env.limit - env.cursor;
+                        if env.cursor <= env.limit_backward {
+                            break 'lab17;
+                        }
+                        env.previous_char();
+                        'lab18: loop {
+                            'lab19: loop {
+                                if !env.in_grouping_b(G_v, 97, 252) {
+                                    break 'lab19;
+                                }
+                                break 'lab18;
+                            }
+                            if !env.eq_s_b(&"ij") {
+                                break 'lab17;
                             }
                             break 'lab18;
                         }
-                        if !env.eq_s_b(&"ij") {
-                            break 'lab17;
+                        env.cursor = env.limit - v_9;
+                        env.slice_del();
+                        break 'lab13;
+                    }
+                    env.cursor = env.limit - v_8;
+                    'lab20: loop {
+                        if !env.eq_s_b(&"ink") {
+                            break 'lab20;
                         }
-                        break 'lab18;
+                        env.bra = env.cursor;
+                        env.slice_from("ing");
+                        break 'lab13;
                     }
-                    env.cursor = env.limit - v_9;
-                    env.slice_del();
-                    break 'lab13;
-                }
-                env.cursor = env.limit - v_8;
-                'lab20: loop {
-                    if !env.eq_s_b(&"ink") {
-                        break 'lab20;
+                    env.cursor = env.limit - v_8;
+                    'lab21: loop {
+                        if !env.eq_s_b(&"mp") {
+                            break 'lab21;
+                        }
+                        env.bra = env.cursor;
+                        env.slice_from("m");
+                        break 'lab13;
                     }
-                    env.bra = env.cursor;
-                    env.slice_from("ing");
-                    break 'lab13;
-                }
-                env.cursor = env.limit - v_8;
-                'lab21: loop {
-                    if !env.eq_s_b(&"mp") {
-                        break 'lab21;
+                    env.cursor = env.limit - v_8;
+                    'lab22: loop {
+                        if !env.eq_s_b(&"'") {
+                            break 'lab22;
+                        }
+                        env.bra = env.cursor;
+                        if context.i_p1 > env.cursor {
+                            break 'lab22;
+                        }
+                        env.slice_del();
+                        break 'lab13;
                     }
-                    env.bra = env.cursor;
-                    env.slice_from("m");
-                    break 'lab13;
-                }
-                env.cursor = env.limit - v_8;
-                'lab22: loop {
-                    if !env.eq_s_b(&"'") {
-                        break 'lab22;
-                    }
+                    env.cursor = env.limit - v_8;
                     env.bra = env.cursor;
                     if context.i_p1 > env.cursor {
-                        break 'lab22;
+                        break 'lab12;
+                    }
+                    if !r_C(env, context) {
+                        break 'lab12;
                     }
                     env.slice_del();
                     break 'lab13;
                 }
-                env.cursor = env.limit - v_8;
-                env.bra = env.cursor;
-                if context.i_p1 > env.cursor {
-                    break 'lab12;
-                }
-                if !r_C(env, context) {
-                    break 'lab12;
-                }
-                env.slice_del();
-                break 'lab13;
-            },
+            }
             2 => {
                 if context.i_p1 > env.cursor {
                     break 'lab12;
@@ -867,7 +863,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                 }
                 env.slice_from("ief");
             }
-            _ => (),
+            _ => ()
         }
         b_stemmed = true;
         break 'lab12;
@@ -876,13 +872,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
     let v_10 = env.limit - env.cursor;
     'lab23: loop {
         env.ket = env.cursor;
-        if (env.cursor - 2 <= env.limit_backward
-            || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8
-            || ((1316016 as i32
-                >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f))
-                & 1)
-                == 0)
-        {
+        if (env.cursor - 2 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8 || ((1316016 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f)) & 1) == 0) {
             break 'lab23;
         }
 
@@ -914,23 +904,25 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             4 => {
                 env.slice_from("r");
             }
-            5 => 'lab24: loop {
-                let v_11 = env.limit - env.cursor;
-                'lab25: loop {
-                    if !env.eq_s_b(&"ild") {
-                        break 'lab25;
+            5 => {
+                'lab24: loop {
+                    let v_11 = env.limit - env.cursor;
+                    'lab25: loop {
+                        if !env.eq_s_b(&"ild") {
+                            break 'lab25;
+                        }
+                        env.slice_from("er");
+                        break 'lab24;
                     }
-                    env.slice_from("er");
+                    env.cursor = env.limit - v_11;
+                    if context.i_p1 > env.cursor {
+                        break 'lab23;
+                    }
+                    env.slice_del();
+                    r_lengthen_V(env, context);
                     break 'lab24;
                 }
-                env.cursor = env.limit - v_11;
-                if context.i_p1 > env.cursor {
-                    break 'lab23;
-                }
-                env.slice_del();
-                r_lengthen_V(env, context);
-                break 'lab24;
-            },
+            }
             6 => {
                 if context.i_p1 > env.cursor {
                     break 'lab23;
@@ -976,7 +968,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                 }
                 env.slice_from("d");
             }
-            _ => (),
+            _ => ()
         }
         b_stemmed = true;
         break 'lab23;
@@ -988,13 +980,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             let v_13 = env.limit - env.cursor;
             'lab28: loop {
                 env.ket = env.cursor;
-                if (env.cursor - 2 <= env.limit_backward
-                    || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8
-                    || ((1315024 as i32
-                        >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f))
-                        & 1)
-                        == 0)
-                {
+                if (env.cursor - 2 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8 || ((1315024 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f)) & 1) == 0) {
                     break 'lab28;
                 }
 
@@ -1071,19 +1057,13 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                         env.slice_del();
                         r_lengthen_V(env, context);
                     }
-                    _ => (),
+                    _ => ()
                 }
                 break 'lab27;
             }
             env.cursor = env.limit - v_13;
             env.ket = env.cursor;
-            if (env.cursor - 1 <= env.limit_backward
-                || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8
-                || ((1310848 as i32
-                    >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f))
-                    & 1)
-                    == 0)
-            {
+            if (env.cursor - 1 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8 || ((1310848 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f)) & 1) == 0) {
                 break 'lab26;
             }
 
@@ -1155,7 +1135,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             }
             env.next_char();
         }
-        'replab35: loop {
+        'replab35: loop{
             let v_20 = env.cursor;
             'lab36: for _ in 0..1 {
                 'lab37: loop {
@@ -1179,32 +1159,22 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             break 'lab30;
         }
         env.cursor = v_18;
-        if (env.cursor + 2 >= env.limit
-            || env.current.as_bytes()[(env.cursor + 2) as usize] as u8 >> 5 != 3 as u8
-            || ((1314818 as i32
-                >> (env.current.as_bytes()[(env.cursor + 2) as usize] as u8 & 0x1f))
-                & 1)
-                == 0)
-        {
-            among_var = -1;
-        } else {
+        if (env.cursor + 2 >= env.limit || env.current.as_bytes()[(env.cursor + 2) as usize] as u8 >> 5 != 3 as u8 || ((1314818 as i32 >> (env.current.as_bytes()[(env.cursor + 2) as usize] as u8 & 0x1f)) & 1) == 0) {among_var = -1;}
+        else {
             among_var = env.find_among(A_9, context);
         }
         match among_var {
             1 => {
                 break 'lab30;
             }
-            _ => (),
+            _ => ()
         }
         b_GE_removed = true;
         env.slice_del();
         let v_21 = env.cursor;
         'lab39: loop {
             env.bra = env.cursor;
-            if (env.cursor + 1 >= env.limit
-                || (env.current.as_bytes()[(env.cursor + 1) as usize] as u8 != 171 as u8
-                    && env.current.as_bytes()[(env.cursor + 1) as usize] as u8 != 175 as u8))
-            {
+            if (env.cursor + 1 >= env.limit || (env.current.as_bytes()[(env.cursor + 1) as usize] as u8 != 171 as u8 && env.current.as_bytes()[(env.cursor + 1) as usize] as u8 != 175 as u8)) {
                 break 'lab39;
             }
 
@@ -1220,7 +1190,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                 2 => {
                     env.slice_from("i");
                 }
-                _ => (),
+                _ => ()
             }
             break 'lab39;
         }
@@ -1296,7 +1266,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             }
             env.next_char();
         }
-        'replab48: loop {
+        'replab48: loop{
             let v_28 = env.cursor;
             'lab49: for _ in 0..1 {
                 'lab50: loop {
@@ -1325,10 +1295,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
         let v_29 = env.cursor;
         'lab52: loop {
             env.bra = env.cursor;
-            if (env.cursor + 1 >= env.limit
-                || (env.current.as_bytes()[(env.cursor + 1) as usize] as u8 != 171 as u8
-                    && env.current.as_bytes()[(env.cursor + 1) as usize] as u8 != 175 as u8))
-            {
+            if (env.cursor + 1 >= env.limit || (env.current.as_bytes()[(env.cursor + 1) as usize] as u8 != 171 as u8 && env.current.as_bytes()[(env.cursor + 1) as usize] as u8 != 175 as u8)) {
                 break 'lab52;
             }
 
@@ -1344,7 +1311,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                 2 => {
                     env.slice_from("i");
                 }
-                _ => (),
+                _ => ()
             }
             break 'lab52;
         }
@@ -1374,9 +1341,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
     let v_31 = env.limit - env.cursor;
     'lab54: loop {
         env.ket = env.cursor;
-        if (env.cursor - 1 <= env.limit_backward
-            || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 116 as u8)
-        {
+        if (env.cursor - 1 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 116 as u8) {
             break 'lab54;
         }
 
@@ -1395,7 +1360,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             3 => {
                 env.slice_from("p");
             }
-            _ => (),
+            _ => ()
         }
         b_stemmed = true;
         break 'lab54;
@@ -1407,13 +1372,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             break 'lab55;
         }
         env.ket = env.cursor;
-        if (env.cursor <= env.limit_backward
-            || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8
-            || ((98532828 as i32
-                >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f))
-                & 1)
-                == 0)
-        {
+        if (env.cursor <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8 || ((98532828 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f)) & 1) == 0) {
             break 'lab55;
         }
 
@@ -1494,11 +1453,11 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             20 => {
                 env.slice_from("z");
             }
-            _ => (),
+            _ => ()
         }
         break 'lab55;
     }
     env.cursor = env.limit - v_32;
     env.cursor = env.limit_backward;
-    return true;
+    return true
 }

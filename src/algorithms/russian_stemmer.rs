@@ -5,11 +5,12 @@
 #![allow(unused_mut)]
 #![allow(unused_parens)]
 #![allow(unused_variables)]
-use snowball::Among;
 use snowball::SnowballEnv;
+use snowball::Among;
 
 #[derive(Clone)]
-struct Context {}
+struct Context {
+}
 
 static A_0: &'static [Among<Context>; 9] = &[
     Among("вшись", -1, 1, None),
@@ -63,7 +64,10 @@ static A_2: &'static [Among<Context>; 8] = &[
     Among("нн", -1, 1, None),
 ];
 
-static A_3: &'static [Among<Context>; 2] = &[Among("сь", -1, 1, None), Among("ся", -1, 1, None)];
+static A_3: &'static [Among<Context>; 2] = &[
+    Among("сь", -1, 1, None),
+    Among("ся", -1, 1, None),
+];
 
 static A_4: &'static [Among<Context>; 46] = &[
     Among("ыт", -1, 2, None),
@@ -153,7 +157,10 @@ static A_5: &'static [Among<Context>; 36] = &[
     Among("о", -1, 1, None),
 ];
 
-static A_6: &'static [Among<Context>; 2] = &[Among("ост", -1, 1, None), Among("ость", -1, 1, None)];
+static A_6: &'static [Among<Context>; 2] = &[
+    Among("ост", -1, 1, None),
+    Among("ость", -1, 1, None),
+];
 
 static A_7: &'static [Among<Context>; 4] = &[
     Among("ейш", -1, 1, None),
@@ -165,13 +172,14 @@ static A_7: &'static [Among<Context>; 4] = &[
 static G_v: &'static [u8; 4] = &[33, 65, 8, 232];
 
 pub fn stem(env: &mut SnowballEnv) -> bool {
-    let mut context = &mut Context {};
+    let mut context = &mut Context {
+    };
     let mut among_var;
-    let mut i_p2: i32;
-    let mut i_pV: i32;
+    let mut i_p2 : i32;
+    let mut i_pV : i32;
     let v_1 = env.cursor;
     'lab0: loop {
-        'replab1: loop {
+        'replab1: loop{
             let v_2 = env.cursor;
             'lab2: for _ in 0..1 {
                 'golab3: loop {
@@ -265,7 +273,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                     2 => {
                         env.slice_del();
                     }
-                    _ => (),
+                    _ => ()
                 }
                 break 'lab8;
             }
@@ -273,10 +281,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             let v_8 = env.limit - env.cursor;
             'lab12: loop {
                 env.ket = env.cursor;
-                if (env.cursor - 3 <= env.limit_backward
-                    || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 140 as u8
-                        && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 143 as u8))
-                {
+                if (env.cursor - 3 <= env.limit_backward || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 140 as u8 && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 143 as u8)) {
                     env.cursor = env.limit - v_8;
                     break 'lab12;
                 }
@@ -327,7 +332,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                             2 => {
                                 env.slice_del();
                             }
-                            _ => (),
+                            _ => ()
                         }
                         break 'lab15;
                     }
@@ -360,7 +365,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                         2 => {
                             env.slice_del();
                         }
-                        _ => (),
+                        _ => ()
                     }
                     break 'lab13;
                 }
@@ -392,10 +397,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
     let v_12 = env.limit - env.cursor;
     'lab22: loop {
         env.ket = env.cursor;
-        if (env.cursor - 5 <= env.limit_backward
-            || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 130 as u8
-                && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 140 as u8))
-        {
+        if (env.cursor - 5 <= env.limit_backward || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 130 as u8 && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 140 as u8)) {
             break 'lab22;
         }
 
@@ -440,12 +442,12 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             3 => {
                 env.slice_del();
             }
-            _ => (),
+            _ => ()
         }
         break 'lab23;
     }
     env.cursor = env.limit - v_13;
     env.limit_backward = v_5;
     env.cursor = env.limit_backward;
-    return true;
+    return true
 }

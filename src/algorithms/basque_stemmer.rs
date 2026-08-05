@@ -5,11 +5,12 @@
 #![allow(unused_mut)]
 #![allow(unused_parens)]
 #![allow(unused_variables)]
-use snowball::Among;
 use snowball::SnowballEnv;
+use snowball::Among;
 
 #[derive(Clone)]
-struct Context {}
+struct Context {
+}
 
 static A_0: &'static [Among<Context>; 109] = &[
     Among("idea", -1, 1, None),
@@ -446,11 +447,12 @@ static A_2: &'static [Among<Context>; 19] = &[
 static G_v: &'static [u8; 3] = &[17, 65, 16];
 
 pub fn stem(env: &mut SnowballEnv) -> bool {
-    let mut context = &mut Context {};
+    let mut context = &mut Context {
+    };
     let mut among_var;
-    let mut i_p2: i32;
-    let mut i_p1: i32;
-    let mut i_pV: i32;
+    let mut i_p2 : i32;
+    let mut i_p1 : i32;
+    let mut i_pV : i32;
     'lab0: loop {
         i_pV = env.limit;
         i_p1 = env.limit;
@@ -546,17 +548,11 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
     }
     env.limit_backward = env.cursor;
     env.cursor = env.limit;
-    'replab9: loop {
+    'replab9: loop{
         let v_6 = env.limit - env.cursor;
         'lab10: for _ in 0..1 {
             env.ket = env.cursor;
-            if (env.cursor - 1 <= env.limit_backward
-                || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8
-                || ((70566434 as i32
-                    >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f))
-                    & 1)
-                    == 0)
-            {
+            if (env.cursor - 1 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8 || ((70566434 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f)) & 1) == 0) {
                 break 'lab10;
             }
 
@@ -578,24 +574,18 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                     }
                     env.slice_del();
                 }
-                _ => (),
+                _ => ()
             }
             continue 'replab9;
         }
         env.cursor = env.limit - v_6;
         break 'replab9;
     }
-    'replab11: loop {
+    'replab11: loop{
         let v_7 = env.limit - env.cursor;
         'lab12: for _ in 0..1 {
             env.ket = env.cursor;
-            if (env.cursor <= env.limit_backward
-                || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8
-                || ((71162402 as i32
-                    >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f))
-                    & 1)
-                    == 0)
-            {
+            if (env.cursor <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8 || ((71162402 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f)) & 1) == 0) {
                 break 'lab12;
             }
 
@@ -632,7 +622,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                 6 => {
                     env.slice_from("minutu");
                 }
-                _ => (),
+                _ => ()
             }
             continue 'replab11;
         }
@@ -642,12 +632,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
     let v_8 = env.limit - env.cursor;
     'lab13: loop {
         env.ket = env.cursor;
-        if (env.cursor - 1 <= env.limit_backward
-            || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8
-            || ((35362 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f))
-                & 1)
-                == 0)
-        {
+        if (env.cursor - 1 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8 || ((35362 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f)) & 1) == 0) {
             break 'lab13;
         }
 
@@ -666,11 +651,11 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             2 => {
                 env.slice_from("z");
             }
-            _ => (),
+            _ => ()
         }
         break 'lab13;
     }
     env.cursor = env.limit - v_8;
     env.cursor = env.limit_backward;
-    return true;
+    return true
 }

@@ -5,11 +5,12 @@
 #![allow(unused_mut)]
 #![allow(unused_parens)]
 #![allow(unused_variables)]
-use snowball::Among;
 use snowball::SnowballEnv;
+use snowball::Among;
 
 #[derive(Clone)]
-struct Context {}
+struct Context {
+}
 
 static A_0: &'static [Among<Context>; 8] = &[
     Among("ba", -1, -1, None),
@@ -45,8 +46,9 @@ static A_2: &'static [Among<Context>; 5] = &[
 static G_v: &'static [u8; 3] = &[17, 65, 16];
 
 pub fn stem(env: &mut SnowballEnv) -> bool {
-    let mut context = &mut Context {};
-    let mut i_pV: i32;
+    let mut context = &mut Context {
+    };
+    let mut i_pV : i32;
     let v_1 = env.cursor;
     if !env.go_out_grouping(G_v, 97, 117) {
         return false;
@@ -76,12 +78,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
         let v_4 = env.limit_backward;
         env.limit_backward = i_pV;
         env.ket = env.cursor;
-        if (env.cursor <= env.limit_backward
-            || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8
-            || ((33282 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f))
-                & 1)
-                == 0)
-        {
+        if (env.cursor <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8 || ((33282 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f)) & 1) == 0) {
             env.limit_backward = v_4;
             break 'lab1;
         }
@@ -104,12 +101,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
         let v_6 = env.limit_backward;
         env.limit_backward = i_pV;
         env.ket = env.cursor;
-        if (env.cursor <= env.limit_backward
-            || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8
-            || ((162 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f))
-                & 1)
-                == 0)
-        {
+        if (env.cursor <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8 || ((162 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f)) & 1) == 0) {
             env.limit_backward = v_6;
             break 'lab2;
         }
@@ -128,12 +120,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
     let v_7 = env.cursor;
     'lab3: loop {
         env.bra = env.cursor;
-        if (env.cursor + 1 >= env.limit
-            || env.current.as_bytes()[(env.cursor + 1) as usize] as u8 >> 5 != 3 as u8
-            || ((33314 as i32 >> (env.current.as_bytes()[(env.cursor + 1) as usize] as u8 & 0x1f))
-                & 1)
-                == 0)
-        {
+        if (env.cursor + 1 >= env.limit || env.current.as_bytes()[(env.cursor + 1) as usize] as u8 >> 5 != 3 as u8 || ((33314 as i32 >> (env.current.as_bytes()[(env.cursor + 1) as usize] as u8 & 0x1f)) & 1) == 0) {
             break 'lab3;
         }
 
@@ -158,5 +145,5 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
         break 'lab3;
     }
     env.cursor = v_7;
-    return true;
+    return true
 }

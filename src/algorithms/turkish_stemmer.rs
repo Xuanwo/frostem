@@ -5,11 +5,12 @@
 #![allow(unused_mut)]
 #![allow(unused_parens)]
 #![allow(unused_variables)]
-use snowball::Among;
 use snowball::SnowballEnv;
+use snowball::Among;
 
 #[derive(Clone)]
-struct Context {}
+struct Context {
+}
 
 static A_0: &'static [Among<Context>; 10] = &[
     Among("m", -1, -1, None),
@@ -24,8 +25,10 @@ static A_0: &'static [Among<Context>; 10] = &[
     Among("nüz", -1, -1, None),
 ];
 
-static A_1: &'static [Among<Context>; 2] =
-    &[Among("leri", -1, -1, None), Among("ları", -1, -1, None)];
+static A_1: &'static [Among<Context>; 2] = &[
+    Among("leri", -1, -1, None),
+    Among("ları", -1, -1, None),
+];
 
 static A_2: &'static [Among<Context>; 4] = &[
     Among("ni", -1, -1, None),
@@ -41,7 +44,10 @@ static A_3: &'static [Among<Context>; 4] = &[
     Among("ün", -1, -1, None),
 ];
 
-static A_5: &'static [Among<Context>; 2] = &[Among("na", -1, -1, None), Among("ne", -1, -1, None)];
+static A_5: &'static [Among<Context>; 2] = &[
+    Among("na", -1, -1, None),
+    Among("ne", -1, -1, None),
+];
 
 static A_6: &'static [Among<Context>; 4] = &[
     Among("da", -1, -1, None),
@@ -50,8 +56,10 @@ static A_6: &'static [Among<Context>; 4] = &[
     Among("te", -1, -1, None),
 ];
 
-static A_7: &'static [Among<Context>; 2] =
-    &[Among("nda", -1, -1, None), Among("nde", -1, -1, None)];
+static A_7: &'static [Among<Context>; 2] = &[
+    Among("nda", -1, -1, None),
+    Among("nde", -1, -1, None),
+];
 
 static A_8: &'static [Among<Context>; 4] = &[
     Among("dan", -1, -1, None),
@@ -60,12 +68,20 @@ static A_8: &'static [Among<Context>; 4] = &[
     Among("ten", -1, -1, None),
 ];
 
-static A_9: &'static [Among<Context>; 2] =
-    &[Among("ndan", -1, -1, None), Among("nden", -1, -1, None)];
+static A_9: &'static [Among<Context>; 2] = &[
+    Among("ndan", -1, -1, None),
+    Among("nden", -1, -1, None),
+];
 
-static A_10: &'static [Among<Context>; 2] = &[Among("la", -1, -1, None), Among("le", -1, -1, None)];
+static A_10: &'static [Among<Context>; 2] = &[
+    Among("la", -1, -1, None),
+    Among("le", -1, -1, None),
+];
 
-static A_11: &'static [Among<Context>; 2] = &[Among("ca", -1, -1, None), Among("ce", -1, -1, None)];
+static A_11: &'static [Among<Context>; 2] = &[
+    Among("ca", -1, -1, None),
+    Among("ce", -1, -1, None),
+];
 
 static A_12: &'static [Among<Context>; 4] = &[
     Among("im", -1, -1, None),
@@ -95,8 +111,10 @@ static A_15: &'static [Among<Context>; 4] = &[
     Among("sünüz", -1, -1, None),
 ];
 
-static A_16: &'static [Among<Context>; 2] =
-    &[Among("lar", -1, -1, None), Among("ler", -1, -1, None)];
+static A_16: &'static [Among<Context>; 2] = &[
+    Among("lar", -1, -1, None),
+    Among("ler", -1, -1, None),
+];
 
 static A_17: &'static [Among<Context>; 4] = &[
     Among("niz", -1, -1, None),
@@ -116,8 +134,10 @@ static A_18: &'static [Among<Context>; 8] = &[
     Among("tür", -1, -1, None),
 ];
 
-static A_19: &'static [Among<Context>; 2] =
-    &[Among("casına", -1, -1, None), Among("cesine", -1, -1, None)];
+static A_19: &'static [Among<Context>; 2] = &[
+    Among("casına", -1, -1, None),
+    Among("cesine", -1, -1, None),
+];
 
 static A_20: &'static [Among<Context>; 32] = &[
     Among("di", -1, -1, None),
@@ -179,23 +199,15 @@ static A_23: &'static [Among<Context>; 4] = &[
     Among("ğ", -1, 4, None),
 ];
 
-static G_vowel: &'static [u8; 27] = &[
-    17, 65, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 32, 8, 0, 0, 0, 0, 0, 0, 1,
-];
+static G_vowel: &'static [u8; 27] = &[17, 65, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 32, 8, 0, 0, 0, 0, 0, 0, 1];
 
-static G_U: &'static [u8; 26] = &[
-    1, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 1,
-];
+static G_U: &'static [u8; 26] = &[1, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 1];
 
-static G_vowel1: &'static [u8; 27] = &[
-    1, 64, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-];
+static G_vowel1: &'static [u8; 27] = &[1, 64, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1];
 
 static G_vowel2: &'static [u8; 19] = &[17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 130];
 
-static G_vowel3: &'static [u8; 27] = &[
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-];
+static G_vowel3: &'static [u8; 27] = &[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1];
 
 static G_vowel4: &'static [u8; 1] = &[17];
 
@@ -289,7 +301,7 @@ fn r_check_vowel_harmony(env: &mut SnowballEnv, context: &mut Context) -> bool {
         break 'lab0;
     }
     env.cursor = env.limit - v_1;
-    return true;
+    return true
 }
 
 fn r_mark_suffix_with_optional_n_consonant(env: &mut SnowballEnv, context: &mut Context) -> bool {
@@ -324,7 +336,7 @@ fn r_mark_suffix_with_optional_n_consonant(env: &mut SnowballEnv, context: &mut 
         env.cursor = env.limit - v_3;
         break 'lab0;
     }
-    return true;
+    return true
 }
 
 fn r_mark_suffix_with_optional_y_consonant(env: &mut SnowballEnv, context: &mut Context) -> bool {
@@ -359,16 +371,11 @@ fn r_mark_suffix_with_optional_y_consonant(env: &mut SnowballEnv, context: &mut 
         env.cursor = env.limit - v_3;
         break 'lab0;
     }
-    return true;
+    return true
 }
 
 fn r_mark_possessives(env: &mut SnowballEnv, context: &mut Context) -> bool {
-    if (env.cursor <= env.limit_backward
-        || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8
-        || ((67133440 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f))
-            & 1)
-            == 0)
-    {
+    if (env.cursor <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8 || ((67133440 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f)) & 1) == 0) {
         return false;
     }
 
@@ -406,7 +413,7 @@ fn r_mark_possessives(env: &mut SnowballEnv, context: &mut Context) -> bool {
         env.cursor = env.limit - v_3;
         break 'lab0;
     }
-    return true;
+    return true
 }
 
 fn r_mark_sU(env: &mut SnowballEnv, context: &mut Context) -> bool {
@@ -447,14 +454,11 @@ fn r_mark_sU(env: &mut SnowballEnv, context: &mut Context) -> bool {
         env.cursor = env.limit - v_3;
         break 'lab0;
     }
-    return true;
+    return true
 }
 
 fn r_mark_lArI(env: &mut SnowballEnv, context: &mut Context) -> bool {
-    if (env.cursor - 3 <= env.limit_backward
-        || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 105 as u8
-            && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 177 as u8))
-    {
+    if (env.cursor - 3 <= env.limit_backward || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 105 as u8 && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 177 as u8)) {
         return false;
     }
 
@@ -465,9 +469,7 @@ fn r_mark_nUn(env: &mut SnowballEnv, context: &mut Context) -> bool {
     if !r_check_vowel_harmony(env, context) {
         return false;
     }
-    if (env.cursor - 1 <= env.limit_backward
-        || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 110 as u8)
-    {
+    if (env.cursor - 1 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 110 as u8) {
         return false;
     }
 
@@ -481,10 +483,7 @@ fn r_mark_DA(env: &mut SnowballEnv, context: &mut Context) -> bool {
     if !r_check_vowel_harmony(env, context) {
         return false;
     }
-    if (env.cursor - 1 <= env.limit_backward
-        || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 97 as u8
-            && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 101 as u8))
-    {
+    if (env.cursor - 1 <= env.limit_backward || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 97 as u8 && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 101 as u8)) {
         return false;
     }
 
@@ -495,10 +494,7 @@ fn r_mark_ndA(env: &mut SnowballEnv, context: &mut Context) -> bool {
     if !r_check_vowel_harmony(env, context) {
         return false;
     }
-    if (env.cursor - 2 <= env.limit_backward
-        || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 97 as u8
-            && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 101 as u8))
-    {
+    if (env.cursor - 2 <= env.limit_backward || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 97 as u8 && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 101 as u8)) {
         return false;
     }
 
@@ -509,9 +505,7 @@ fn r_mark_yUm(env: &mut SnowballEnv, context: &mut Context) -> bool {
     if !r_check_vowel_harmony(env, context) {
         return false;
     }
-    if (env.cursor - 1 <= env.limit_backward
-        || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 109 as u8)
-    {
+    if (env.cursor - 1 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 109 as u8) {
         return false;
     }
 
@@ -525,9 +519,7 @@ fn r_mark_sUn(env: &mut SnowballEnv, context: &mut Context) -> bool {
     if !r_check_vowel_harmony(env, context) {
         return false;
     }
-    if (env.cursor - 2 <= env.limit_backward
-        || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 110 as u8)
-    {
+    if (env.cursor - 2 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 110 as u8) {
         return false;
     }
 
@@ -538,9 +530,7 @@ fn r_mark_yUz(env: &mut SnowballEnv, context: &mut Context) -> bool {
     if !r_check_vowel_harmony(env, context) {
         return false;
     }
-    if (env.cursor - 1 <= env.limit_backward
-        || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 122 as u8)
-    {
+    if (env.cursor - 1 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 122 as u8) {
         return false;
     }
 
@@ -551,9 +541,7 @@ fn r_mark_yUz(env: &mut SnowballEnv, context: &mut Context) -> bool {
 }
 
 fn r_mark_sUnUz(env: &mut SnowballEnv, context: &mut Context) -> bool {
-    if (env.cursor - 4 <= env.limit_backward
-        || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 122 as u8)
-    {
+    if (env.cursor - 4 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 122 as u8) {
         return false;
     }
 
@@ -564,9 +552,7 @@ fn r_mark_lAr(env: &mut SnowballEnv, context: &mut Context) -> bool {
     if !r_check_vowel_harmony(env, context) {
         return false;
     }
-    if (env.cursor - 2 <= env.limit_backward
-        || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 114 as u8)
-    {
+    if (env.cursor - 2 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 114 as u8) {
         return false;
     }
 
@@ -577,9 +563,7 @@ fn r_mark_DUr(env: &mut SnowballEnv, context: &mut Context) -> bool {
     if !r_check_vowel_harmony(env, context) {
         return false;
     }
-    if (env.cursor - 2 <= env.limit_backward
-        || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 114 as u8)
-    {
+    if (env.cursor - 2 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 114 as u8) {
         return false;
     }
 
@@ -597,11 +581,7 @@ fn r_mark_yDU(env: &mut SnowballEnv, context: &mut Context) -> bool {
 }
 
 fn r_mark_ysA(env: &mut SnowballEnv, context: &mut Context) -> bool {
-    if (env.cursor - 1 <= env.limit_backward
-        || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8
-        || ((26658 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f)) & 1)
-            == 0)
-    {
+    if (env.cursor - 1 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 >> 5 != 3 as u8 || ((26658 as i32 >> (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 & 0x1f)) & 1) == 0) {
         return false;
     }
 
@@ -615,9 +595,7 @@ fn r_mark_ymUs_(env: &mut SnowballEnv, context: &mut Context) -> bool {
     if !r_check_vowel_harmony(env, context) {
         return false;
     }
-    if (env.cursor - 3 <= env.limit_backward
-        || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 159 as u8)
-    {
+    if (env.cursor - 3 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 159 as u8) {
         return false;
     }
 
@@ -802,13 +780,14 @@ fn r_stem_suffix_chain_before_ki(env: &mut SnowballEnv, context: &mut Context) -
         }
         break 'lab0;
     }
-    return true;
+    return true
 }
 
 pub fn stem(env: &mut SnowballEnv) -> bool {
-    let mut context = &mut Context {};
+    let mut context = &mut Context {
+    };
     let mut among_var;
-    let mut b_continue_stemming_noun_suffixes: bool;
+    let mut b_continue_stemming_noun_suffixes : bool;
     'lab0: loop {
         let v_1 = env.cursor;
         'lab1: loop {
@@ -917,10 +896,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             }
             env.cursor = env.limit - v_8;
             'lab15: loop {
-                if (env.cursor - 5 <= env.limit_backward
-                    || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 97 as u8
-                        && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 101 as u8))
-                {
+                if (env.cursor - 5 <= env.limit_backward || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 97 as u8 && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 101 as u8)) {
                     break 'lab15;
                 }
 
@@ -1020,9 +996,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                 if !r_check_vowel_harmony(env, context) {
                     break 'lab28;
                 }
-                if (env.cursor - 2 <= env.limit_backward
-                    || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 122 as u8)
-                {
+                if (env.cursor - 2 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 122 as u8) {
                     break 'lab28;
                 }
 
@@ -1179,10 +1153,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                 if !r_check_vowel_harmony(env, context) {
                     break 'lab48;
                 }
-                if (env.cursor - 1 <= env.limit_backward
-                    || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 97 as u8
-                        && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 101 as u8))
-                {
+                if (env.cursor - 1 <= env.limit_backward || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 97 as u8 && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 101 as u8)) {
                     break 'lab48;
                 }
 
@@ -1276,11 +1247,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                     if !r_check_vowel_harmony(env, context) {
                         break 'lab56;
                     }
-                    if (env.cursor - 1 <= env.limit_backward
-                        || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 97 as u8
-                            && env.current.as_bytes()[(env.cursor - 1) as usize] as u8
-                                != 101 as u8))
-                    {
+                    if (env.cursor - 1 <= env.limit_backward || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 97 as u8 && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 101 as u8)) {
                         break 'lab56;
                     }
 
@@ -1340,9 +1307,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                         if !r_check_vowel_harmony(env, context) {
                             break 'lab65;
                         }
-                        if (env.cursor - 3 <= env.limit_backward
-                            || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 110 as u8)
-                        {
+                        if (env.cursor - 3 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 110 as u8) {
                             break 'lab65;
                         }
 
@@ -1399,9 +1364,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                 if !r_check_vowel_harmony(env, context) {
                     break 'lab69;
                 }
-                if (env.cursor - 2 <= env.limit_backward
-                    || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 110 as u8)
-                {
+                if (env.cursor - 2 <= env.limit_backward || env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 110 as u8) {
                     break 'lab69;
                 }
 
@@ -1481,11 +1444,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                     if !r_check_vowel_harmony(env, context) {
                         break 'lab76;
                     }
-                    if (env.cursor - 1 <= env.limit_backward
-                        || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 97 as u8
-                            && env.current.as_bytes()[(env.cursor - 1) as usize] as u8
-                                != 101 as u8))
-                    {
+                    if (env.cursor - 1 <= env.limit_backward || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 97 as u8 && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 101 as u8)) {
                         break 'lab76;
                     }
 
@@ -1607,11 +1566,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                     if !r_check_vowel_harmony(env, context) {
                         break 'lab88;
                     }
-                    if (env.cursor <= env.limit_backward
-                        || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 97 as u8
-                            && env.current.as_bytes()[(env.cursor - 1) as usize] as u8
-                                != 101 as u8))
-                    {
+                    if (env.cursor <= env.limit_backward || (env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 97 as u8 && env.current.as_bytes()[(env.cursor - 1) as usize] as u8 != 101 as u8)) {
                         break 'lab88;
                     }
 
@@ -1834,11 +1789,11 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             4 => {
                 env.slice_from("k");
             }
-            _ => (),
+            _ => ()
         }
         break 'lab116;
     }
     env.cursor = env.limit - v_50;
     env.cursor = env.limit_backward;
-    return true;
+    return true
 }
