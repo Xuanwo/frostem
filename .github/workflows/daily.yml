@@ -2,7 +2,8 @@ name: daily-upstream
 
 on:
   schedule:
-    # Once per day (UTC). Policy: detect HEAD once daily; always publish when it moved.
+    # Once per day (UTC). Policy: detect HEAD once daily; publish when it moved.
+    # Version bump lives in scripts/sync_from_snowball.py (algorithms/ gate).
     - cron: "17 3 * * *"
   workflow_dispatch:
     inputs:
@@ -84,14 +85,20 @@ jobs:
         if: steps.changed.outputs.changed == 'true'
         run: python3 scripts/sync_from_snowball.py
 
-      - name: Decide version (semver-checks + same-day patch)
+      - name: Decide version (semver-checks + collision; algorithms gate is in sync script)
         if: steps.changed.outputs.changed == 'true'
         id: version
         run: |
           set -euo pipefail
-          major=$(sed -n 's/^version = \"\([0-9]*\)\..*/\1/p' Cargo.toml)
-          minor=$(sed -n 's/^version = \"[0-9]*\.\([0-9]*\)\..*/\1/p' Cargo.toml)
-          patch=0
+
+          # sync_from_snowball.py already applied the algorithms/ gate.
+          major=$(sed -n 's/^version = "\([0-9]*\)\..*/\1/p' Cargo.toml)
+          minor=$(sed -n 's/^version = "[0-9]*\.\([0-9]*\)\..*/\1/p' Cargo.toml)
+          patch=$(sed -n 's/^version = "[0-9]*\.[0-9]*\.\([0-9]*\)"/\1/p' Cargo.toml)
+          if [[ -z "$major" || -z "$minor" || -z "$patch" ]]; then
+            echo "failed to parse version from Cargo.toml after sync" >&2
+            exit 1
+          fi
 
           # Keep CI logs out of the repo working tree (avoid dirty publish / accidental commit).
           semver_out="${RUNNER_TEMP}/semver.out"
@@ -104,6 +111,7 @@ jobs:
           cat "$semver_out" || true
           cat "$semver_err" || true
 
+          rewrite=false
           if [[ $rc -ne 0 ]]; then
             if grep -qiE \
               'not been published|could not|no crate|404|failed to|unable to|does not exist|never published|not found' \
@@ -112,6 +120,7 @@ jobs:
             else
               echo "semver-checks reported API break; bumping major"
               major=$((major + 1))
+              rewrite=true
             fi
           else
             echo "semver-checks: no breaking changes"
@@ -119,10 +128,11 @@ jobs:
 
           version="${major}.${minor}.${patch}"
 
-          # Strategy A: same-day re-release / tag collision → bump patch
+          # Tag / crates.io collision → bump patch further.
           while git rev-parse "v${version}" >/dev/null 2>&1; do
             patch=$((patch + 1))
             version="${major}.${minor}.${patch}"
+            rewrite=true
           done
 
           if command -v curl >/dev/null; then
@@ -130,11 +140,15 @@ jobs:
               "https://crates.io/api/v1/crates/frostem/${version}" >/dev/null 2>&1; do
               patch=$((patch + 1))
               version="${major}.${minor}.${patch}"
+              rewrite=true
             done
           fi
 
-          python3 scripts/sync_from_snowball.py --skip-build --snowball-dir .snowball-src \
-            --major "$major" --patch "$patch"
+          if [[ "$rewrite" == "true" ]]; then
+            # Pin is already at HEAD; pass explicit components so the gate is not re-applied.
+            python3 scripts/sync_from_snowball.py --skip-build --snowball-dir .snowball-src \
+              --major "$major" --minor "$minor" --patch "$patch"
+          fi
 
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "Resolved version: $version"
