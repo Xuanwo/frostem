@@ -591,7 +591,7 @@ impl Algorithm {
             #[cfg(feature = "norwegian")]
             "norwegian" => Ok(Self::Norwegian),
             #[cfg(feature = "persian")]
-            "pers" => Ok(Self::Persian),
+            "per" => Ok(Self::Persian),
             #[cfg(feature = "persian")]
             "persian" => Ok(Self::Persian),
             #[cfg(feature = "polish")]
