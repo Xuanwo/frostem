@@ -200,7 +200,7 @@ static G_v: &'static [u8; 20] = &[17, 65, 16, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 static G_oux_ending: &'static [u8; 2] = &[65, 85];
 
-static G_elision_char: &'static [u8; 3] = &[131, 14, 3];
+static G_elision_char: &'static [u8; 3] = &[131, 14, 131];
 
 static G_keep_with_s: &'static [u8; 17] = &[1, 65, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128];
 
@@ -216,7 +216,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
         env.bra = env.cursor;
         'lab1: loop {
             'lab2: loop {
-                if !env.in_grouping(G_elision_char, 99, 116) {
+                if !env.in_grouping(G_elision_char, 99, 122) {
                     break 'lab2;
                 }
                 break 'lab1;
