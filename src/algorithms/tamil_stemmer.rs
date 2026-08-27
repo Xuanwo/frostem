@@ -85,16 +85,7 @@ static A_6: &'static [Among<Context>; 6] = &[
     Among("\u{BB1}", -1, -1, None),
 ];
 
-static A_7: &'static [Among<Context>; 6] = &[
-    Among("\u{B95}", -1, -1, None),
-    Among("\u{B9A}", -1, -1, None),
-    Among("\u{B9F}", -1, -1, None),
-    Among("\u{BA4}", -1, -1, None),
-    Among("\u{BAA}", -1, -1, None),
-    Among("\u{BB1}", -1, -1, None),
-];
-
-static A_8: &'static [Among<Context>; 11] = &[
+static A_7: &'static [Among<Context>; 11] = &[
     Among("\u{B9E}", -1, -1, None),
     Among("\u{BA3}", -1, -1, None),
     Among("\u{BA8}", -1, -1, None),
@@ -108,7 +99,7 @@ static A_8: &'static [Among<Context>; 11] = &[
     Among("\u{BB5}", -1, -1, None),
 ];
 
-static A_9: &'static [Among<Context>; 9] = &[
+static A_8: &'static [Among<Context>; 9] = &[
     Among("\u{BC0}", -1, -1, None),
     Among("\u{BC1}", -1, -1, None),
     Among("\u{BC2}", -1, -1, None),
@@ -120,64 +111,31 @@ static A_9: &'static [Among<Context>; 9] = &[
     Among("\u{BBF}", -1, -1, None),
 ];
 
-static A_10: &'static [Among<Context>; 3] = &[
+static A_9: &'static [Among<Context>; 3] = &[
     Among("\u{B85}", -1, -1, None),
     Among("\u{B87}", -1, -1, None),
     Among("\u{B89}", -1, -1, None),
 ];
 
-static A_11: &'static [Among<Context>; 10] = &[
-    Among("\u{B95}", -1, -1, None),
-    Among("\u{B99}", -1, -1, None),
-    Among("\u{B9A}", -1, -1, None),
-    Among("\u{B9E}", -1, -1, None),
-    Among("\u{BA4}", -1, -1, None),
-    Among("\u{BA8}", -1, -1, None),
-    Among("\u{BAA}", -1, -1, None),
-    Among("\u{BAE}", -1, -1, None),
-    Among("\u{BAF}", -1, -1, None),
-    Among("\u{BB5}", -1, -1, None),
-];
-
-static A_12: &'static [Among<Context>; 6] = &[
-    Among("\u{B95}", -1, -1, None),
-    Among("\u{B9A}", -1, -1, None),
-    Among("\u{B9F}", -1, -1, None),
-    Among("\u{BA4}", -1, -1, None),
-    Among("\u{BAA}", -1, -1, None),
-    Among("\u{BB1}", -1, -1, None),
-];
-
-static A_13: &'static [Among<Context>; 4] = &[
+static A_10: &'static [Among<Context>; 4] = &[
     Among("\u{B95}\u{BB3}\u{BCD}", -1, 4, None),
     Among("\u{BC1}\u{B99}\u{BCD}\u{B95}\u{BB3}\u{BCD}", 0, 1, None),
     Among("\u{B9F}\u{BCD}\u{B95}\u{BB3}\u{BCD}", 0, 3, None),
     Among("\u{BB1}\u{BCD}\u{B95}\u{BB3}\u{BCD}", 0, 2, None),
 ];
 
-static A_14: &'static [Among<Context>; 3] = &[
+static A_11: &'static [Among<Context>; 3] = &[
     Among("\u{BC7}", -1, -1, None),
     Among("\u{BCB}", -1, -1, None),
     Among("\u{BBE}", -1, -1, None),
 ];
 
-static A_15: &'static [Among<Context>; 2] = &[
+static A_12: &'static [Among<Context>; 2] = &[
     Among("\u{BAA}\u{BBF}", -1, -1, None),
     Among("\u{BB5}\u{BBF}", -1, -1, None),
 ];
 
-static A_16: &'static [Among<Context>; 8] = &[
-    Among("\u{BC0}", -1, -1, None),
-    Among("\u{BC1}", -1, -1, None),
-    Among("\u{BC2}", -1, -1, None),
-    Among("\u{BC6}", -1, -1, None),
-    Among("\u{BC7}", -1, -1, None),
-    Among("\u{BC8}", -1, -1, None),
-    Among("\u{BBE}", -1, -1, None),
-    Among("\u{BBF}", -1, -1, None),
-];
-
-static A_17: &'static [Among<Context>; 26] = &[
+static A_13: &'static [Among<Context>; 26] = &[
     Among("\u{BAA}\u{B9F}\u{BCD}\u{B9F}\u{BC1}", -1, 3, None),
     Among("\u{BB5}\u{BBF}\u{B9F}\u{BCD}\u{B9F}\u{BC1}", -1, 3, None),
     Among("\u{BAA}\u{B9F}\u{BC1}", -1, 3, None),
@@ -206,29 +164,7 @@ static A_17: &'static [Among<Context>; 26] = &[
     Among("\u{BAA}\u{BB1}\u{BCD}\u{BB1}\u{BBF}", -1, 3, None),
 ];
 
-static A_18: &'static [Among<Context>; 8] = &[
-    Among("\u{BC0}", -1, -1, None),
-    Among("\u{BC1}", -1, -1, None),
-    Among("\u{BC2}", -1, -1, None),
-    Among("\u{BC6}", -1, -1, None),
-    Among("\u{BC7}", -1, -1, None),
-    Among("\u{BC8}", -1, -1, None),
-    Among("\u{BBE}", -1, -1, None),
-    Among("\u{BBF}", -1, -1, None),
-];
-
-static A_19: &'static [Among<Context>; 8] = &[
-    Among("\u{BC0}", -1, -1, None),
-    Among("\u{BC1}", -1, -1, None),
-    Among("\u{BC2}", -1, -1, None),
-    Among("\u{BC6}", -1, -1, None),
-    Among("\u{BC7}", -1, -1, None),
-    Among("\u{BC8}", -1, -1, None),
-    Among("\u{BBE}", -1, -1, None),
-    Among("\u{BBF}", -1, -1, None),
-];
-
-static A_20: &'static [Among<Context>; 22] = &[
+static A_14: &'static [Among<Context>; 22] = &[
     Among("\u{BC0}", -1, 7, None),
     Among("\u{BCA}\u{B9F}\u{BC1}", -1, 2, None),
     Among("\u{BCB}\u{B9F}\u{BC1}", -1, 2, None),
@@ -253,25 +189,7 @@ static A_20: &'static [Among<Context>; 22] = &[
     Among("\u{BB5}\u{BBF}\u{B9F}", -1, 2, None),
 ];
 
-static A_21: &'static [Among<Context>; 6] = &[
-    Among("\u{B95}", -1, -1, None),
-    Among("\u{B9A}", -1, -1, None),
-    Among("\u{B9F}", -1, -1, None),
-    Among("\u{BA4}", -1, -1, None),
-    Among("\u{BAA}", -1, -1, None),
-    Among("\u{BB1}", -1, -1, None),
-];
-
-static A_22: &'static [Among<Context>; 6] = &[
-    Among("\u{B95}", -1, -1, None),
-    Among("\u{B9A}", -1, -1, None),
-    Among("\u{B9F}", -1, -1, None),
-    Among("\u{BA4}", -1, -1, None),
-    Among("\u{BAA}", -1, -1, None),
-    Among("\u{BB1}", -1, -1, None),
-];
-
-static A_23: &'static [Among<Context>; 12] = &[
+static A_15: &'static [Among<Context>; 12] = &[
     Among("\u{B85}", -1, -1, None),
     Among("\u{B86}", -1, -1, None),
     Among("\u{B87}", -1, -1, None),
@@ -286,18 +204,7 @@ static A_23: &'static [Among<Context>; 12] = &[
     Among("\u{B94}", -1, -1, None),
 ];
 
-static A_24: &'static [Among<Context>; 8] = &[
-    Among("\u{BC0}", -1, -1, None),
-    Among("\u{BC1}", -1, -1, None),
-    Among("\u{BC2}", -1, -1, None),
-    Among("\u{BC6}", -1, -1, None),
-    Among("\u{BC7}", -1, -1, None),
-    Among("\u{BC8}", -1, -1, None),
-    Among("\u{BBE}", -1, -1, None),
-    Among("\u{BBF}", -1, -1, None),
-];
-
-static A_25: &'static [Among<Context>; 46] = &[
+static A_16: &'static [Among<Context>; 46] = &[
     Among("\u{B95}\u{BC1}", -1, 6, None),
     Among("\u{BAA}\u{B9F}\u{BC1}", -1, 1, None),
     Among("\u{BA4}\u{BC1}", -1, 3, None),
@@ -346,7 +253,7 @@ static A_25: &'static [Among<Context>; 46] = &[
     Among("\u{BBE}", -1, 5, None),
 ];
 
-static A_26: &'static [Among<Context>; 6] = &[
+static A_17: &'static [Among<Context>; 6] = &[
     Among("\u{B95}\u{BBF}\u{BA9}\u{BCD}\u{BB1}\u{BCD}", -1, -1, None),
     Among("\u{BBE}\u{BA8}\u{BBF}\u{BA9}\u{BCD}\u{BB1}\u{BCD}", -1, -1, None),
     Among("\u{B95}\u{BBF}\u{BB1}\u{BCD}", -1, -1, None),
@@ -504,7 +411,7 @@ fn r_fix_ending(env: &mut SnowballEnv, context: &mut Context) -> bool {
                         env.cursor = env.limit - v_5;
                         break 'lab6;
                     }
-                    if env.find_among_b(A_7, context) == 0 {
+                    if env.find_among_b(A_6, context) == 0 {
                         env.cursor = env.limit - v_5;
                         break 'lab6;
                     }
@@ -516,7 +423,7 @@ fn r_fix_ending(env: &mut SnowballEnv, context: &mut Context) -> bool {
             }
             env.cursor = env.limit - v_4;
             'lab7: loop {
-                if env.find_among_b(A_8, context) == 0 {
+                if env.find_among_b(A_7, context) == 0 {
                     break 'lab7;
                 }
                 env.bra = env.cursor;
@@ -528,7 +435,7 @@ fn r_fix_ending(env: &mut SnowballEnv, context: &mut Context) -> bool {
             }
             env.cursor = env.limit - v_4;
             let v_6 = env.limit - env.cursor;
-            if env.find_among_b(A_9, context) == 0 {
+            if env.find_among_b(A_8, context) == 0 {
                 return false;
             }
             env.cursor = env.limit - v_6;
@@ -582,10 +489,10 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             break 'lab1;
         }
 
-        if env.find_among(A_10, context) == 0 {
+        if env.find_among(A_9, context) == 0 {
             break 'lab1;
         }
-        if env.find_among(A_11, context) == 0 {
+        if env.find_among(A_1, context) == 0 {
             break 'lab1;
         }
         if !env.eq_s(&"\u{BCD}") {
@@ -608,7 +515,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
         let v_6 = env.limit - env.cursor;
         'lab3: loop {
             env.ket = env.cursor;
-            if env.find_among_b(A_14, context) == 0 {
+            if env.find_among_b(A_11, context) == 0 {
                 break 'lab3;
             }
             env.bra = env.cursor;
@@ -648,7 +555,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
         env.limit_backward = env.cursor;
         env.cursor = env.limit;
         env.ket = env.cursor;
-        among_var = env.find_among_b(A_17, context);
+        among_var = env.find_among_b(A_13, context);
         if among_var == 0 {
             break 'lab5;
         }
@@ -660,7 +567,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             2 => {
                 let v_10 = env.limit - env.cursor;
                 'lab6: loop {
-                    if env.find_among_b(A_16, context) == 0 {
+                    if env.find_among_b(A_3, context) == 0 {
                         break 'lab6;
                     }
                     break 'lab5;
@@ -695,7 +602,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                     break 'lab9;
                 }
 
-                among_var = env.find_among_b(A_20, context);
+                among_var = env.find_among_b(A_14, context);
                 if among_var == 0 {
                     break 'lab9;
                 }
@@ -725,7 +632,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                     5 => {
                         let v_14 = env.limit - env.cursor;
                         'lab11: loop {
-                            if env.find_among_b(A_18, context) == 0 {
+                            if env.find_among_b(A_3, context) == 0 {
                                 break 'lab11;
                             }
                             break 'lab9;
@@ -736,7 +643,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                     6 => {
                         let v_15 = env.limit - env.cursor;
                         'lab12: loop {
-                            if env.find_among_b(A_19, context) == 0 {
+                            if env.find_among_b(A_3, context) == 0 {
                                 break 'lab12;
                             }
                             break 'lab9;
@@ -763,7 +670,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                 'lab14: loop {
                     let v_18 = env.limit - env.cursor;
                     'lab15: loop {
-                        if env.find_among_b(A_21, context) == 0 {
+                        if env.find_among_b(A_6, context) == 0 {
                             break 'lab15;
                         }
                         break 'lab14;
@@ -773,7 +680,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                 }
                 env.cursor = env.limit - v_17;
                 let v_19 = env.limit - env.cursor;
-                if env.find_among_b(A_22, context) == 0 {
+                if env.find_among_b(A_6, context) == 0 {
                     break 'lab7;
                 }
                 if !env.eq_s_b(&"\u{BCD}") {
@@ -813,7 +720,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             break 'lab17;
         }
 
-        among_var = env.find_among_b(A_13, context);
+        among_var = env.find_among_b(A_10, context);
         if among_var == 0 {
             break 'lab17;
         }
@@ -823,7 +730,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                 'lab18: loop {
                     let v_22 = env.limit - env.cursor;
                     'lab19: loop {
-                        if env.find_among_b(A_12, context) == 0 {
+                        if env.find_among_b(A_6, context) == 0 {
                             break 'lab19;
                         }
                         env.slice_from("\u{BC1}\u{B99}\u{BCD}");
@@ -861,7 +768,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
             break 'lab20;
         }
 
-        if env.find_among_b(A_15, context) == 0 {
+        if env.find_among_b(A_12, context) == 0 {
             break 'lab20;
         }
         env.bra = env.cursor;
@@ -885,7 +792,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                 'lab24: loop {
                     let v_27 = env.limit - env.cursor;
                     env.ket = env.cursor;
-                    among_var = env.find_among_b(A_25, context);
+                    among_var = env.find_among_b(A_16, context);
                     if among_var == 0 {
                         break 'lab24;
                     }
@@ -901,7 +808,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                                     break 'lab25;
                                 }
 
-                                if env.find_among_b(A_23, context) == 0 {
+                                if env.find_among_b(A_15, context) == 0 {
                                     break 'lab25;
                                 }
                                 break 'lab24;
@@ -912,7 +819,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                         3 => {
                             let v_29 = env.limit - env.cursor;
                             'lab26: loop {
-                                if env.find_among_b(A_24, context) == 0 {
+                                if env.find_among_b(A_3, context) == 0 {
                                     break 'lab26;
                                 }
                                 break 'lab24;
@@ -954,7 +861,7 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
                         break 'lab28;
                     }
 
-                    if env.find_among_b(A_26, context) == 0 {
+                    if env.find_among_b(A_17, context) == 0 {
                         break 'lab28;
                     }
                     env.bra = env.cursor;
