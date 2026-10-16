@@ -210,6 +210,11 @@ pub enum Algorithm {
     /// Enabled by the `turkish` Cargo feature. Canonical id: `"turkish"`.
     #[cfg(feature = "turkish")]
     Turkish,
+    /// `ukrainian` Snowball stemmer.
+    ///
+    /// Enabled by the `ukrainian` Cargo feature. Canonical id: `"ukrainian"`.
+    #[cfg(feature = "ukrainian")]
+    Ukrainian,
     /// `yiddish` Snowball stemmer.
     ///
     /// Enabled by the `yiddish` Cargo feature. Canonical id: `"yiddish"`.
@@ -306,6 +311,8 @@ impl Algorithm {
             Self::Tamil => "tamil",
             #[cfg(feature = "turkish")]
             Self::Turkish => "turkish",
+            #[cfg(feature = "ukrainian")]
+            Self::Ukrainian => "ukrainian",
             #[cfg(feature = "yiddish")]
             Self::Yiddish => "yiddish",
         }
@@ -399,6 +406,8 @@ impl Algorithm {
             Self::Tamil,
             #[cfg(feature = "turkish")]
             Self::Turkish,
+            #[cfg(feature = "ukrainian")]
+            Self::Ukrainian,
             #[cfg(feature = "yiddish")]
             Self::Yiddish,
         ]
@@ -656,6 +665,12 @@ impl Algorithm {
             "tur" => Ok(Self::Turkish),
             #[cfg(feature = "turkish")]
             "turkish" => Ok(Self::Turkish),
+            #[cfg(feature = "ukrainian")]
+            "uk" => Ok(Self::Ukrainian),
+            #[cfg(feature = "ukrainian")]
+            "ukr" => Ok(Self::Ukrainian),
+            #[cfg(feature = "ukrainian")]
+            "ukrainian" => Ok(Self::Ukrainian),
             #[cfg(feature = "yiddish")]
             "yi" => Ok(Self::Yiddish),
             #[cfg(feature = "yiddish")]

@@ -82,6 +82,8 @@ pub(crate) fn stem_fn(algorithm: Algorithm) -> StemFn {
         Algorithm::Tamil => algorithms::tamil_stemmer::stem,
         #[cfg(feature = "turkish")]
         Algorithm::Turkish => algorithms::turkish_stemmer::stem,
+        #[cfg(feature = "ukrainian")]
+        Algorithm::Ukrainian => algorithms::ukrainian_stemmer::stem,
         #[cfg(feature = "yiddish")]
         Algorithm::Yiddish => algorithms::yiddish_stemmer::stem,
     }

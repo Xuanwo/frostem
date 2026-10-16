@@ -111,6 +111,9 @@ pub mod tamil_stemmer;
 #[cfg(feature = "turkish")]
 pub mod turkish_stemmer;
 
+#[cfg(feature = "ukrainian")]
+pub mod ukrainian_stemmer;
+
 #[cfg(feature = "yiddish")]
 pub mod yiddish_stemmer;
 
