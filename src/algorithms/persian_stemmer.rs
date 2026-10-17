@@ -1,4 +1,4 @@
-// Generated from persian.sbl by Snowball 3.1.1 - https://snowballstem.org/
+// Generated from persian.sbl by Snowball 3.2.0 - https://snowballstem.org/
 
 #![allow(non_snake_case)]
 #![allow(non_upper_case_globals)]
